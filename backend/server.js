@@ -183,6 +183,27 @@ app.delete("/delete/admin-data/:id", async (req, res) => {
   console.log("user deleted after DEL request: ", admin);
   res.json(admin);
 });
-
+app.post("/add/student-input", async (req, res) => {
+  const { studentId, name, email, disability } = req.body;
+  console.log("backend name", studentId);
+  console.log("backend email", name);
+  console.log("backend email", email);
+  console.log("backend disability", disability);
+  const admin = await prisma.studentForm.create({
+    data: {
+      studentId,
+      name,
+      email,
+      disability,
+    },
+  });
+  console.log("admin created");
+  res.json(admin);
+});
+app.get("/get/student-input", async (req, res) => {
+  const studentInputs = await prisma.studentForm.findMany();
+  console.log("fetched student input data: ", studentInputs);
+  res.json(studentInputs);
+});
 // Start listening on port 9000
 app.listen(port, () => console.log("App listening on port " + port));

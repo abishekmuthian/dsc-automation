@@ -9,9 +9,9 @@ import {
   getSevenDaysFromTodayDateTimestamp,
   getTodaysDateTimestamp,
 } from "./utils/date";
-// import AdminPage from "./AdminPage";
 import AdminForm from "./components/AdminPage/AdminForm";
 import AdminPage from "./components/AdminPage/AdminPage";
+import StudentForm from "./components/StudentForm/StudentForm";
 
 function App() {
   let enableAdmin = true;
@@ -22,27 +22,29 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [events, setEvents] = useState([]);
 
-  // const [admin, setAdmin] = useState({
-  //   id: 0,
-  //   name: "",
-  //   email: "",
-  // });
-
+  // admin settings components
   const [admin, setAdmin] = useState({});
+  const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
     const url = serverBaseUrl + "/get/admin-data";
     fetchAdmin(url);
   }, []);
 
+  const handleShowLogin = (show) => {
+    console.log("show: ", show);
+    setShowLogin(show);
+  };
   function fetchAdmin(url) {
     axios.get(url).then((res) => {
       console.log("Admin data fetched: ", res.data);
       if (res.data.length > 0) {
         console.log("get admin data: ", res.data);
         setAdmin(res.data[0]);
+        setShowLogin(true);
       } else {
         setAdmin({});
+        setShowLogin(false);
       }
     });
   }
@@ -220,7 +222,11 @@ function App() {
       refresh={refresh}
     >
       {!userId ? (
-        <NylasLogin email={userEmail} setEmail={setUserEmail} />
+        showLogin ? (
+          <StudentForm handleShowLogin={handleShowLogin} />
+        ) : (
+          <NylasLogin email={userEmail} setEmail={setUserEmail} />
+        )
       ) : enableAdmin ? (
         admin.name ? (
           <div className="app-card">
