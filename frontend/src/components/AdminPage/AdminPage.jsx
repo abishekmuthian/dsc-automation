@@ -3,6 +3,7 @@ import Switch from "react-switch";
 import axios from "axios";
 
 const AdminPage = ({ admin, handleStudentToggle, onDeleteAdmin }) => {
+  console.log("admin in admin page: ", admin);
   const [checked, setChecked] = useState(false);
   const [showData, setShowData] = useState(false);
   const [studentInputs, setStudentInputs] = useState([]);
@@ -11,9 +12,8 @@ const AdminPage = ({ admin, handleStudentToggle, onDeleteAdmin }) => {
   useEffect(() => {
     const url = serverBaseUrl + "/get/student-input";
     axios.get(url).then((res) => {
-      console.log("Student Inputs fetched: ", res.data);
       if (res.data.length > 0) {
-        console.log("get admin data: ", res.data);
+        console.log("students data: ", res.data);
         setStudentInputs(res.data);
       } else {
         setStudentInputs([]);
@@ -44,13 +44,15 @@ const AdminPage = ({ admin, handleStudentToggle, onDeleteAdmin }) => {
         <p>Enable Student Form</p>
         <Switch
           onChange={handleChange}
-          checked={checked}
+          checked={admin.studentFormToggle ? true : checked}
           className="react-switch"
           onColor="#4169e1"
         />
       </div>
       <br />
-      <button onClick={() => setShowData(!showData)}>Show Student Input</button>
+      <button onClick={() => setShowData(!showData)}>
+        {showData ? "Hide" : "Show"} Student Input
+      </button>
       {showData && (
         <ul>
           {studentInputs.map((input, index) => (

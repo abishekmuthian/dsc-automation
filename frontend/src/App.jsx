@@ -24,16 +24,16 @@ function App() {
 
   // admin settings components
   const [admin, setAdmin] = useState({});
-  const [showLogin, setShowLogin] = useState(false);
+  const [showStudentForm, setShowStudentForm] = useState(false);
 
   useEffect(() => {
     const url = serverBaseUrl + "/get/admin-data";
     fetchAdmin(url);
   }, []);
 
-  const handleShowLogin = (show) => {
+  const handleShowStudentForm = (show) => {
     console.log("show: ", show);
-    setShowLogin(show);
+    setShowStudentForm(show);
   };
   function fetchAdmin(url) {
     axios.get(url).then((res) => {
@@ -41,10 +41,12 @@ function App() {
       if (res.data.length > 0) {
         console.log("get admin data: ", res.data);
         setAdmin(res.data[0]);
-        setShowLogin(true);
+        if (res.data[0].studentFormToggle) {
+          setShowStudentForm(true);
+        }
       } else {
         setAdmin({});
-        setShowLogin(false);
+        setShowStudentForm(false);
       }
     });
   }
@@ -54,6 +56,7 @@ function App() {
     axios.delete(url).then(() => {
       console.log("admin deleted");
       setAdmin({});
+      setShowStudentForm(false);
     });
     // setAdmin({});
   };
@@ -222,8 +225,8 @@ function App() {
       refresh={refresh}
     >
       {!userId ? (
-        showLogin ? (
-          <StudentForm handleShowLogin={handleShowLogin} />
+        showStudentForm ? (
+          <StudentForm handleShowStudentForm={handleShowStudentForm} />
         ) : (
           <NylasLogin email={userEmail} setEmail={setUserEmail} />
         )

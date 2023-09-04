@@ -2,7 +2,8 @@ import React, { useRef, useState } from "react";
 import axios from "axios";
 import StudentDetailSaved from "./StudentDetailSaved";
 
-const StudentForm = ({ handleShowLogin }) => {
+const StudentForm = ({ handleShowStudentForm }) => {
+  console.log("student form invoked");
   const studentIdRef = useRef(null);
   const emailRef = useRef(null);
   const nameRef = useRef(null);
@@ -81,7 +82,10 @@ const StudentForm = ({ handleShowLogin }) => {
 
   return (
     <section className="form_page">
-      <button style={{ float: "right" }} onClick={() => handleShowLogin(false)}>
+      <button
+        style={{ float: "right" }}
+        onClick={() => handleShowStudentForm(false)}
+      >
         Admin Login
       </button>
       <form className="student_form" onSubmit={handleSubmit}>
