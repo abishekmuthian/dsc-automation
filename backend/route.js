@@ -28,6 +28,27 @@ exports.readCalendars = async (req, res) => {
   return res.json(calendars);
 };
 
+exports.freeBusy = async (req, res, user) => {
+  const nylas = Nylas.with(user.accessToken);
+
+  // Search for free-busy time slots over the next 24 hours.
+  // Replace with user set starttime, end time depending upon the working days
+const startTime = Math.floor(Date.now() / 1000); // current unix timestamp in seconds
+const endTime = startTime + (60 * 60 * 24); // add 24 hours in seconds
+
+// To check free-busy with calendars:
+const freeBusy = nylas.calendars.freeBusy({
+  startTime: startTime,
+  endTime: endTime,
+  emails: [user.email] //Use admin email id here
+});
+
+console.log("Calendar free time: ", freeBusy);
+  
+}
+
+
+
 exports.createEvents = async (req, res) => {
   const user = res.locals.user;
 
