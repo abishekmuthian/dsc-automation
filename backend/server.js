@@ -11,7 +11,7 @@ const Nylas = require("nylas");
 const { WebhookTriggers } = require("nylas/lib/models/webhook");
 const { openWebhookTunnel } = require("nylas/lib/services/tunnel");
 const { Scope } = require("nylas/lib/models/connect");
-
+const { OpenAI } = require("openai");
 dotenv.config();
 
 const app = express();
@@ -27,6 +27,11 @@ Nylas.config({
   clientId: process.env.NYLAS_CLIENT_ID,
   clientSecret: process.env.NYLAS_CLIENT_SECRET,
   apiServer: process.env.NYLAS_API_SERVER,
+});
+
+// Initialize the Open AI SDK using the client credentials
+const openai = new OpenAI({
+  apiKey:  process.env.OPENAI_API_KEY
 });
 
 // Before we start our backend, we should register our frontend as a
@@ -135,8 +140,8 @@ app.post("/nylas/create-events", isAuthenticated, express.json(), (req, res) =>
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-// get stored user data from sqlite db using prims
 
+// get stored user data from sqlite db using prims
 app.get("/get/admin-data", async (req, res) => {
   // res.send("Request received for Admin data");
   const adminData = await prisma.user.findMany();
@@ -183,6 +188,7 @@ app.delete("/delete/admin-data/:id", async (req, res) => {
   console.log("user deleted after DEL request: ", admin);
   res.json(admin);
 });
+
 app.post("/add/student-input", async (req, res) => {
   const { studentId, name, email, disability } = req.body;
   console.log("backend name", studentId);
@@ -198,12 +204,69 @@ app.post("/add/student-input", async (req, res) => {
     },
   });
   console.log("admin created");
+
+  console.log("Checking for free busy time")
+  const user = await prisma.user.findMany();
+  route.freeBusy(req,res, user);
   res.json(admin);
 });
+
 app.get("/get/student-input", async (req, res) => {
   const studentInputs = await prisma.studentForm.findMany();
   console.log("fetched student input data: ", studentInputs);
   res.json(studentInputs);
 });
+
+
+// Fetch the inclusive pedagogy from open AI for the disease mentioned by the student in the form
+async function getInclusivePedagogy(disability) {
+  if (disability.trim().length === 0) {
+    res.status(400).json({
+      error: {
+        message: "Please enter a valid disability",
+      }
+    });
+    return;
+  }
+
+  try {
+    const completion = await openai.completions.create({
+      model: "text-davinci-003",
+      prompt: "Inclusive pedagogy for "+disability,
+      temperature: 0.6,
+      max_tokens: 30,
+    });
+    return completion.data.choices[0].text;
+  } catch(error) {
+    // Consider adjusting the error handling logic for your use case
+    if (error.response) {
+      console.error(error.response.status, error.response.data);
+      res.status(error.response.status).json(error.response.data);
+    } else {
+      console.error(`Error with OpenAI API request: ${error.message}`);
+      res.status(500).json({
+        error: {
+          message: 'An error occurred during your request.',
+        }
+      });
+    }
+  }
+}
+
+// Send the email to the medical counselor and the student
+async function sendEmail(subject, recipients, body) {
+  try {
+    const message = await Nylas.messages.send({
+      subject: 'Hello from Nylas',
+      to: [{ name: 'Recipient Name', email: 'recipient@example.com' }],
+      body: 'This is the email content.',
+    });
+
+    console.log('Email sent successfully');
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
+}
+
 // Start listening on port 9000
 app.listen(port, () => console.log("App listening on port " + port));
