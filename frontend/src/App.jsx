@@ -32,7 +32,7 @@ function App() {
   }, []);
 
   const handleShowStudentForm = (show) => {
-    console.log("show: ", show);
+    // console.log("show: ", show);
     setShowStudentForm(show);
   };
   function fetchAdmin(url) {
@@ -52,30 +52,38 @@ function App() {
   }
 
   const onDeleteAdmin = (admin) => {
+    console.log("delete id: ", admin.id);
     const url = serverBaseUrl + `/delete/admin-data/${admin.id}`;
-    axios.delete(url).then(() => {
-      console.log("admin deleted");
-      setAdmin({});
+    axios.put(url, { admin }).then((response) => {
+      // console.log("admin deleted");
+      console.log("deleted data: ", response.data);
+      setAdmin(response.data);
       setShowStudentForm(false);
     });
     // setAdmin({});
   };
   const handleAdminSave = (adminObject) => {
     // setAdmin(adminObject);
+    console.log("admin: ", admin);
+    console.log("admin object: ", adminObject);
     const url = serverBaseUrl + "/add/admin-data";
     axios
-      .post(url, { ...adminObject, accessToken: "test-token" })
+      .post(url, {
+        ...admin,
+        medicalCounselorName: adminObject.medicalCounselorName,
+        medicalCounselorEmail: adminObject.medicalCounselorEmail,
+      })
       .then((response) => {
-        console.log("Add admin - post response from backend: ", response.data);
+        // console.log("Add admin - post response from backend: ", response.data);
         setAdmin(response.data);
       });
   };
 
   const handleStudentToggle = (updatedAdminObject) => {
-    console.log("updatedAdminObject: ", updatedAdminObject);
+    // console.log("updatedAdminObject: ", updatedAdminObject);
     const url = serverBaseUrl + "/enable/student-form";
     axios.put(url, updatedAdminObject).then((response) => {
-      console.log("Admin data after toggle from backend: ", response.data);
+      // console.log("Admin data after toggle from backend: ", response.data);
       setAdmin(updatedAdminObject);
     });
   };
@@ -231,7 +239,7 @@ function App() {
           <NylasLogin email={userEmail} setEmail={setUserEmail} />
         )
       ) : enableAdmin ? (
-        admin.name ? (
+        admin.medicalCounselorEmail ? (
           <div className="app-card">
             <AdminPage
               admin={admin}

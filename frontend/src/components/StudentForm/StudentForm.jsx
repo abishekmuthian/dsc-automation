@@ -3,7 +3,7 @@ import axios from "axios";
 import StudentDetailSaved from "./StudentDetailSaved";
 
 const StudentForm = ({ handleShowStudentForm }) => {
-  console.log("student form invoked");
+  // console.log("student form invoked");
   const studentIdRef = useRef(null);
   const emailRef = useRef(null);
   const nameRef = useRef(null);
@@ -59,17 +59,17 @@ const StudentForm = ({ handleShowStudentForm }) => {
     studentInput.email = emailRef.current.value;
     studentInput.name = nameRef.current.value;
     studentInput.disability = disability;
-    console.log("student Input: ", studentInput);
+    // console.log("student Input: ", studentInput);
     const url = serverBaseUrl + "/add/student-input";
     axios
       .post(url, studentInput)
       .then((response) => {
-        console.log("Add student Input", response.data);
+        // console.log("Add student Input", response.data);
         setDataStored(true);
       })
       .catch((err) => {
         setDataStored(false);
-        console.log("Error saving student input");
+        // console.log("Error saving student input");
       });
 
     emailRef.current.value = "";

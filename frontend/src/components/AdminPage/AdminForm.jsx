@@ -7,13 +7,13 @@ const AdminForm = ({ admin, handleAdminSave }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const adminDetails = {
-      name: "",
-      email: "",
-      accessToken: "",
+      medicalCounselorName: "",
+      medicalCounselorEmail: "",
     };
-    adminDetails.email = emailRef.current.value;
-    adminDetails.name = nameRef.current.value;
-    // console.log(adminDetails);
+
+    adminDetails.medicalCounselorName = nameRef.current.value;
+    adminDetails.medicalCounselorEmail = emailRef.current.value;
+
     handleAdminSave(adminDetails);
 
     emailRef.current.value = "";
@@ -26,7 +26,7 @@ const AdminForm = ({ admin, handleAdminSave }) => {
         <h2>Admin Form Save</h2>
         <div className="form_inputs">
           <div>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Medical Counselor Name</label>
             <input
               type="text"
               id="name"
@@ -37,7 +37,7 @@ const AdminForm = ({ admin, handleAdminSave }) => {
             />
           </div>
           <div>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Medical Counselor Email</label>
             <input
               type="text"
               id="email"

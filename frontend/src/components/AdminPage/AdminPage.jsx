@@ -3,7 +3,7 @@ import Switch from "react-switch";
 import axios from "axios";
 
 const AdminPage = ({ admin, handleStudentToggle, onDeleteAdmin }) => {
-  console.log("admin in admin page: ", admin);
+  // console.log("admin in admin page: ", admin);
   const [checked, setChecked] = useState(false);
   const [showData, setShowData] = useState(false);
   const [studentInputs, setStudentInputs] = useState([]);
@@ -13,7 +13,7 @@ const AdminPage = ({ admin, handleStudentToggle, onDeleteAdmin }) => {
     const url = serverBaseUrl + "/get/student-input";
     axios.get(url).then((res) => {
       if (res.data.length > 0) {
-        console.log("students data: ", res.data);
+        // console.log("students data: ", res.data);
         setStudentInputs(res.data);
       } else {
         setStudentInputs([]);
@@ -23,7 +23,7 @@ const AdminPage = ({ admin, handleStudentToggle, onDeleteAdmin }) => {
 
   const handleChange = (nextChecked) => {
     setChecked(nextChecked);
-    console.log("admin data while toggling: ", admin);
+    // console.log("admin data while toggling: ", admin);
     handleStudentToggle({ ...admin, studentFormToggle: nextChecked });
   };
   return (
@@ -33,8 +33,8 @@ const AdminPage = ({ admin, handleStudentToggle, onDeleteAdmin }) => {
           Settings Page{" "}
           <button onClick={() => onDeleteAdmin(admin)}>Delete</button>
         </h2>
-        <p>Name: {admin.name}</p>
-        <p>Email: {admin.email}</p>
+        <p>Medical Counselor Name: {admin.medicalCounselorName}</p>
+        <p>Medical Councelor Email: {admin.medicalCounselorEmail}</p>
       </div>
 
       <div
