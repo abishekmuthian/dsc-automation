@@ -14,7 +14,7 @@ import AdminPage from "./components/AdminPage/AdminPage";
 import StudentForm from "./components/StudentForm/StudentForm";
 
 function App() {
-  let enableAdmin = true;
+  // let enableAdmin = true;
   const nylas = useNylas();
   const [primaryCalendar, setPrimaryCalendar] = useState(null);
   const [userId, setUserId] = useState("");
@@ -25,6 +25,7 @@ function App() {
   // admin settings components
   const [admin, setAdmin] = useState({});
   const [showStudentForm, setShowStudentForm] = useState(false);
+  const [enableAdmin, setEnableAdmin] = useState(true);
 
   useEffect(() => {
     const url = serverBaseUrl + "/get/admin-data";
@@ -50,7 +51,9 @@ function App() {
       }
     });
   }
-
+  const enableCalendar = () => {
+    setEnableAdmin(!enableAdmin);
+  };
   const onDeleteAdmin = (admin) => {
     console.log("delete id: ", admin.id);
     const url = serverBaseUrl + `/delete/admin-data/${admin.id}`;
@@ -231,6 +234,7 @@ function App() {
       disconnectUser={disconnectUser}
       isLoading={isLoading}
       refresh={refresh}
+      enableCalendar={enableCalendar}
     >
       {!userId ? (
         showStudentForm ? (

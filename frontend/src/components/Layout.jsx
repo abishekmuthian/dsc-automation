@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import IconSync from './icons/IconSync.jsx';
-import IconLogout from './icons/IconLogout.jsx';
-import NylasLogo from './icons/nylas-logo-horizontal.svg';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import IconSync from "./icons/IconSync.jsx";
+import IconLogout from "./icons/IconLogout.jsx";
+import NylasLogo from "./icons/nylas-logo-horizontal.svg";
+import PropTypes from "prop-types";
 
 const Layout = ({
   children,
@@ -10,8 +10,10 @@ const Layout = ({
   disconnectUser,
   refresh,
   isLoading,
+  enableCalendar,
 }) => {
   const [isDisconnecting, setIsDisconnecting] = useState(false);
+  const [calendarButton, setCalendarButton] = useState(true);
 
   const handleRefresh = (e) => {
     e.preventDefault();
@@ -27,21 +29,31 @@ const Layout = ({
     }, 1500);
   };
 
+  const handleAdminCalendar = () => {
+    setCalendarButton(!calendarButton);
+    enableCalendar();
+  };
+
   return (
     <div className="layout">
       <div className="title-menu">
         <h1>Calendar sample app</h1>
         {showMenu && (
           <div className="menu">
+            <button onClick={handleAdminCalendar}>
+              <span className="hidden-mobile">
+                {calendarButton ? "Open Calendar" : "Open Settings"}
+              </span>
+            </button>
             <button
               onClick={handleRefresh}
               disabled={isLoading || isDisconnecting}
             >
-              <div className={`menu-icon ${isLoading ? 'syncing' : ''}`}>
+              <div className={`menu-icon ${isLoading ? "syncing" : ""}`}>
                 <IconSync />
               </div>
               <span className="hidden-mobile">
-                {isLoading ? 'Refreshing' : 'Refresh'}
+                {isLoading ? "Refreshing" : "Refresh"}
               </span>
             </button>
             <div className="hidden-mobile">·</div>
@@ -53,7 +65,7 @@ const Layout = ({
                 <IconLogout />
               </div>
               <span className="hidden-mobile">
-                {isDisconnecting ? 'Disconnecting...' : 'Disconnect account'}
+                {isDisconnecting ? "Disconnecting..." : "Disconnect account"}
               </span>
             </button>
           </div>
