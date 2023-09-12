@@ -26,5 +26,16 @@ model StudentForm {
   name  String
   email String  
   disability String
+  programme String
+  courseType String
+  dob String
+  gender String
+  contact String
+  guardian String
+  guardianContact String
+  other String
+  otherDetails String
+  crossSchool String
+  mandatory String
   
 }

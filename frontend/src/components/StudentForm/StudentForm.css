@@ -1,0 +1,11 @@
+.form_page {
+  margin-left: 5px;
+  height: 55vh;
+  overflow: scroll;
+}
+
+.form_input_hr {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}

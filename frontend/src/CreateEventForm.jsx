@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import {
   applyTimezone,
   convertUTCDate,
   getDefaultEventStartTime,
   getDefaultEventEndTime,
   getMinimumEventEndTime,
-} from './utils/date';
+} from "./utils/date";
 
 function CreateEventForm({
   userId,
@@ -15,28 +15,39 @@ function CreateEventForm({
   setShowCreateEventForm,
   setToastNotification,
   refresh,
+  studentName = "",
 }) {
   const [startTime, setStartTime] = useState(getDefaultEventStartTime());
   const [endTime, setEndTime] = useState(getDefaultEventEndTime());
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
   const [participants, setParticipants] = useState(
-    sessionStorage.getItem('userEmail') || ''
+    sessionStorage.getItem("userEmail") || ""
   );
-  const [description, setDescription] = useState('');
+
+  const [description, setDescription] = useState("");
+  useEffect(() => {
+    if (studentName) {
+      const newTitle = `Medical Counselor appointment with ${studentName}`;
+      setTitle(newTitle);
+    }
+  }, [studentName]);
 
   const now = new Date();
 
   const createEvent = async (e) => {
     e.preventDefault();
-
+    console.log("calendar id: ", calendarId);
+    console.log("participants: ", participants);
+    console.log("title: ", title);
+    console.log("description: ", description);
     try {
-      const url = serverBaseUrl + '/nylas/create-events';
+      const url = serverBaseUrl + "/nylas/create-events";
 
       const res = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
           Authorization: userId,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           startTime: applyTimezone(startTime),
@@ -47,23 +58,26 @@ function CreateEventForm({
           participants,
         }),
       });
-
+      console.log("res : ", res);
       if (!res.ok) {
-        setToastNotification('error');
+        console.log("error while creating event", res);
+        setToastNotification("error");
         throw new Error(res.statusText);
       }
 
       const data = await res.json();
 
-      console.log('Event created:', data);
+      console.log("Event created:", data);
 
       // reset form fields
       setStartTime(convertUTCDate(new Date()));
       setEndTime(convertUTCDate(new Date()));
-      setTitle('');
-      setDescription('');
+      setTitle("");
+      setDescription("");
+      console.log("before event from set");
       setShowCreateEventForm(false);
-      setToastNotification('success');
+      setToastNotification("success");
+      console.log("after event from set");
       refresh();
     } catch (err) {
       console.warn(`Error creating event:`, err);

@@ -1,31 +1,86 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useCallback, useRef, useState } from "react";
 import Switch from "react-switch";
 import axios from "axios";
+import CalendarApp from "../../CalendarApp";
 
-const AdminPage = ({ admin, handleStudentToggle, onDeleteAdmin }) => {
-  // console.log("admin in admin page: ", admin);
+const AdminPage = ({
+  admin,
+  handleStudentToggle,
+  onDeleteAdmin,
+  enableCalendar,
+  userId,
+  calendarId,
+  serverBaseUrl,
+  isLoading,
+  setIsLoading,
+  events,
+  refresh,
+}) => {
   const [checked, setChecked] = useState(false);
   const [showData, setShowData] = useState(false);
   const [studentInputs, setStudentInputs] = useState([]);
-  const serverBaseUrl =
+  const [selectedStudent, setSelectedStduent] = useState("");
+  const [calendarButton, setCalendarButton] = useState(true);
+
+  const serverBaseUrlA =
     import.meta.env.VITE_SERVER_URI || "http://localhost:9000";
   useEffect(() => {
-    const url = serverBaseUrl + "/get/student-input";
+    const url = serverBaseUrlA + "/get/student-input";
     axios.get(url).then((res) => {
       if (res.data.length > 0) {
-        // console.log("students data: ", res.data);
         setStudentInputs(res.data);
       } else {
         setStudentInputs([]);
       }
     });
+    refresh();
   }, []);
 
-  const handleChange = (nextChecked) => {
-    setChecked(nextChecked);
-    // console.log("admin data while toggling: ", admin);
-    handleStudentToggle({ ...admin, studentFormToggle: nextChecked });
-  };
+  // const handleAdminCalendar = () => {
+  //   setCalendarButton(!calendarButton);
+  //   enableCalendar();
+  // };
+
+  // const handleAdminCalendar = useCallback(() => {
+  //   setCalendarButton(!calendarButton);
+  //   enableCalendar();
+  // });
+
+  // const handleChange = (nextChecked) => {
+  //   setChecked(nextChecked);
+  //   // console.log("admin data while toggling: ", admin);
+  //   handleStudentToggle({ ...admin, studentFormToggle: nextChecked });
+  // };
+
+  const handleChange = useCallback(
+    (nextChecked) => {
+      setChecked(nextChecked);
+      handleStudentToggle({ ...admin, studentFormToggle: nextChecked });
+    },
+    [checked]
+  );
+
+  const handleEventCreator = useCallback(
+    (name) => {
+      // console.log("event create log anme: ", name);
+      setSelectedStduent(name);
+    },
+    [selectedStudent]
+  );
+
+  if (selectedStudent)
+    return (
+      <CalendarApp
+        userId={userId}
+        calendarId={calendarId}
+        serverBaseUrl={serverBaseUrl}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        events={events}
+        refresh={refresh}
+        studentName={selectedStudent}
+      />
+    );
   return (
     <div className="app-card">
       <div>
@@ -53,15 +108,56 @@ const AdminPage = ({ admin, handleStudentToggle, onDeleteAdmin }) => {
       <button onClick={() => setShowData(!showData)}>
         {showData ? "Hide" : "Show"} Student Input
       </button>
-      {showData && (
+      {/* {showData && (
         <ul>
           {studentInputs.map((input, index) => (
             <li key={index}>{input.name}</li>
           ))}
         </ul>
+      )} */}
+
+      {showData && (
+        <div>
+          <table className="table_all">
+            <thead>
+              <tr className="table_header">
+                <td>Student Id</td>
+                <td>Student Name</td>
+                <td>Schedule</td>
+              </tr>
+            </thead>
+            <tbody>
+              {studentInputs.map((input, index) => (
+                <tr key={index}>
+                  <td>{input.studentId}</td>
+                  <td>{input.name}</td>
+                  <td>
+                    <button onClick={() => handleEventCreator(input.name)}>
+                      Schedule
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
 };
 
 export default AdminPage;
+
+{
+  /* <div>
+<CalendarApp
+  userId={userId}
+  calendarId={calendarId}
+  serverBaseUrl={serverBaseUrl}
+  isLoading={isLoading}
+  setIsLoading={setIsLoading}
+  events={events}
+  refresh={refresh}
+/>
+</div> */
+}

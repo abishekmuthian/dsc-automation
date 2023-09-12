@@ -7,6 +7,8 @@ import PropTypes from "prop-types";
 const Layout = ({
   children,
   showMenu = false,
+  showAdminLogin,
+  handleShowStudentForm,
   disconnectUser,
   refresh,
   isLoading,
@@ -38,13 +40,21 @@ const Layout = ({
     <div className="layout">
       <div className="title-menu">
         <h1>Calendar sample app</h1>
+        {showAdminLogin && (
+          <div className="menu">
+            <button onClick={() => handleShowStudentForm(false)}>
+              <span className="hidden-mobile">Admin Login</span>
+            </button>{" "}
+          </div>
+        )}
         {showMenu && (
           <div className="menu">
             <button onClick={handleAdminCalendar}>
               <span className="hidden-mobile">
-                {calendarButton ? "Open Calendar" : "Open Settings"}
+                {calendarButton ? "Calendar" : "Settings"}
               </span>
             </button>
+            <div className="hidden-mobile">·</div>
             <button
               onClick={handleRefresh}
               disabled={isLoading || isDisconnecting}

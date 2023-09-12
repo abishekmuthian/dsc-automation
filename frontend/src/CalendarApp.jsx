@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import EventList from './EventList';
-import EventDetail from './EventDetail';
-import Toast from './components/Toast';
-import CreateEventForm from './CreateEventForm';
-import './styles/calendar.scss';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import EventList from "./EventList";
+import EventDetail from "./EventDetail";
+import Toast from "./components/Toast";
+import CreateEventForm from "./CreateEventForm";
+import "./styles/calendar.scss";
 
 function CalendarApp({
   userId,
@@ -14,10 +14,21 @@ function CalendarApp({
   setIsLoading,
   events,
   refresh,
+  studentName = "",
 }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showCreateEventForm, setShowCreateEventForm] = useState(false);
-  const [toastNotification, setToastNotification] = useState('');
+  const [toastNotification, setToastNotification] = useState("");
+  // console.log("studentName: ", studentName);
+  // console.log(typeof userId, userId);
+  console.log("form flag1: ", showCreateEventForm);
+  useEffect(() => {
+    if (studentName) {
+      console.log("student event shoud create now: ", studentName);
+      setShowCreateEventForm(true);
+    }
+  }, []);
+  console.log("form flag2: ", showCreateEventForm);
 
   return (
     <>
@@ -32,7 +43,7 @@ function CalendarApp({
             <section className="event-header">
               <p className="title">Upcoming events</p>
               <p
-                className={`create-event${showCreateEventForm ? ' hide' : ''}`}
+                className={`create-event${showCreateEventForm ? " hide" : ""}`}
                 onClick={() => setShowCreateEventForm(true)}
               >
                 Create event
@@ -56,6 +67,7 @@ function CalendarApp({
               toastNotification={toastNotification}
               setToastNotification={setToastNotification}
               refresh={refresh}
+              studentName={studentName}
             />
           ) : (
             <EventDetail selectedEvent={selectedEvent} />
@@ -85,3 +97,40 @@ CalendarApp.propTypes = {
 };
 
 export default CalendarApp;
+
+// return (
+//   <>
+//     <Toast
+//       toastNotification={toastNotification}
+//       setToastNotification={setToastNotification}
+//     />
+//     <div className="calendar-app">
+//       <>
+//         <div className="event-list-view">
+//           <section className="event-header">
+//             <p className="title">Upcoming events</p>
+//           </section>
+//           <EventList
+//             events={events}
+//             userId={userId}
+//             setSelectedEvent={setSelectedEvent}
+//             selectedEvent={selectedEvent}
+//             setIsLoading={setIsLoading}
+//             isLoading={isLoading}
+//           />
+//         </div>
+
+//         <CreateEventForm
+//           userId={userId}
+//           calendarId={calendarId}
+//           serverBaseUrl={serverBaseUrl}
+//           setShowCreateEventForm={setShowCreateEventForm}
+//           toastNotification={toastNotification}
+//           setToastNotification={setToastNotification}
+//           refresh={refresh}
+//           studentName={studentName}
+//         />
+//       </>
+//     </div>
+//   </>
+// );

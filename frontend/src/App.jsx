@@ -14,7 +14,6 @@ import AdminPage from "./components/AdminPage/AdminPage";
 import StudentForm from "./components/StudentForm/StudentForm";
 
 function App() {
-  // let enableAdmin = true;
   const nylas = useNylas();
   const [primaryCalendar, setPrimaryCalendar] = useState(null);
   const [userId, setUserId] = useState("");
@@ -22,7 +21,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [events, setEvents] = useState([]);
 
-  // admin settings components
   const [admin, setAdmin] = useState({});
   const [showStudentForm, setShowStudentForm] = useState(false);
   const [enableAdmin, setEnableAdmin] = useState(true);
@@ -33,14 +31,11 @@ function App() {
   }, []);
 
   const handleShowStudentForm = (show) => {
-    // console.log("show: ", show);
     setShowStudentForm(show);
   };
   function fetchAdmin(url) {
     axios.get(url).then((res) => {
-      console.log("Admin data fetched: ", res.data);
       if (res.data.length > 0) {
-        console.log("get admin data: ", res.data);
         setAdmin(res.data[0]);
         if (res.data[0].studentFormToggle) {
           setShowStudentForm(true);
@@ -55,20 +50,13 @@ function App() {
     setEnableAdmin(!enableAdmin);
   };
   const onDeleteAdmin = (admin) => {
-    console.log("delete id: ", admin.id);
     const url = serverBaseUrl + `/delete/admin-data/${admin.id}`;
     axios.put(url, { admin }).then((response) => {
-      // console.log("admin deleted");
-      console.log("deleted data: ", response.data);
       setAdmin(response.data);
       setShowStudentForm(false);
     });
-    // setAdmin({});
   };
   const handleAdminSave = (adminObject) => {
-    // setAdmin(adminObject);
-    console.log("admin: ", admin);
-    console.log("admin object: ", adminObject);
     const url = serverBaseUrl + "/add/admin-data";
     axios
       .post(url, {
@@ -77,16 +65,13 @@ function App() {
         medicalCounselorEmail: adminObject.medicalCounselorEmail,
       })
       .then((response) => {
-        // console.log("Add admin - post response from backend: ", response.data);
         setAdmin(response.data);
       });
   };
 
   const handleStudentToggle = (updatedAdminObject) => {
-    // console.log("updatedAdminObject: ", updatedAdminObject);
     const url = serverBaseUrl + "/enable/student-form";
     axios.put(url, updatedAdminObject).then((response) => {
-      // console.log("Admin data after toggle from backend: ", response.data);
       setAdmin(updatedAdminObject);
     });
   };
@@ -140,7 +125,7 @@ function App() {
   const getPrimaryCalendar = async () => {
     try {
       const url = serverBaseUrl + "/nylas/read-calendars";
-
+      // console.log("user id before getting primary: ", userId, typeof userId);
       const res = await fetch(url, {
         method: "GET",
         headers: {
@@ -148,7 +133,7 @@ function App() {
           "Content-Type": "application/json",
         },
       });
-
+      // console.log("fetch calendar res: ", res);
       if (!res.ok) {
         throw new Error(res.statusText);
       }
@@ -235,10 +220,12 @@ function App() {
       isLoading={isLoading}
       refresh={refresh}
       enableCalendar={enableCalendar}
+      showAdminLogin={showStudentForm && !userId}
+      handleShowStudentForm={handleShowStudentForm}
     >
       {!userId ? (
         showStudentForm ? (
-          <StudentForm handleShowStudentForm={handleShowStudentForm} />
+          <StudentForm />
         ) : (
           <NylasLogin email={userEmail} setEmail={setUserEmail} />
         )
@@ -249,6 +236,14 @@ function App() {
               admin={admin}
               handleStudentToggle={handleStudentToggle}
               onDeleteAdmin={onDeleteAdmin}
+              enableCalendar={enableCalendar}
+              userId={typeof userId === "string" ? userId : userId.toString()}
+              calendarId={primaryCalendar?.id}
+              serverBaseUrl={serverBaseUrl}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              events={events}
+              refresh={refresh}
             />
           </div>
         ) : (
@@ -259,7 +254,7 @@ function App() {
       ) : (
         <div className="app-card">
           <CalendarApp
-            userId={userId}
+            userId={typeof userId === "string" ? userId : userId.toString()}
             calendarId={primaryCalendar?.id}
             serverBaseUrl={serverBaseUrl}
             isLoading={isLoading}

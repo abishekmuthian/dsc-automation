@@ -287,7 +287,23 @@ app.put("/delete/admin-data/:id", async (req, res) => {
 });
 
 app.post("/add/student-input", async (req, res) => {
-  const { studentId, name, email, disability } = req.body;
+  const {
+    studentId,
+    name,
+    email,
+    disability,
+    programme,
+    courseType,
+    dob,
+    gender,
+    contact,
+    guardian,
+    guardianContact,
+    other,
+    otherDetails,
+    crossSchool,
+    mandatory,
+  } = req.body;
   console.log("backend name", studentId);
   console.log("backend email", name);
   console.log("backend email", email);
@@ -298,6 +314,17 @@ app.post("/add/student-input", async (req, res) => {
       name,
       email,
       disability,
+      programme,
+      courseType,
+      dob,
+      gender,
+      contact,
+      guardian,
+      guardianContact,
+      other,
+      otherDetails,
+      crossSchool,
+      mandatory,
     },
   });
   console.log("admin created");
