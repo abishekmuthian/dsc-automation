@@ -21,14 +21,14 @@ function CalendarApp({
   const [toastNotification, setToastNotification] = useState("");
   // console.log("studentName: ", studentName);
   // console.log(typeof userId, userId);
-  console.log("form flag1: ", showCreateEventForm);
+  // console.log("form flag1: ", showCreateEventForm);
   useEffect(() => {
     if (studentName) {
-      console.log("student event shoud create now: ", studentName);
+      // console.log("student event shoud create now: ", studentName);
       setShowCreateEventForm(true);
     }
   }, []);
-  console.log("form flag2: ", showCreateEventForm);
+  // console.log("form flag2: ", showCreateEventForm);
 
   return (
     <>

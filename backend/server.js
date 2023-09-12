@@ -114,9 +114,11 @@ app.post("/nylas/exchange-mailbox-token", express.json(), async (req, res) => {
   // res.json(adminUser);
 
   const updateAdmin = async (adminId, emailAddress, accessToken) => {
+    console.log("update admin id: ", adminId);
     const updAdmin = await prisma.user.update({
       where: {
-        id: parseInt(adminUser.id),
+        // id: parseInt(adminUser.id),
+        id: parseInt(adminId),
       },
       data: {
         name: "",

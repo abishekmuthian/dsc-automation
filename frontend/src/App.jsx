@@ -28,7 +28,7 @@ function App() {
   useEffect(() => {
     const url = serverBaseUrl + "/get/admin-data";
     fetchAdmin(url);
-  }, []);
+  }, [userId]);
 
   const handleShowStudentForm = (show) => {
     setShowStudentForm(show);
@@ -37,6 +37,7 @@ function App() {
     axios.get(url).then((res) => {
       if (res.data.length > 0) {
         setAdmin(res.data[0]);
+        console.log("setting admin state: ", res.data[0]);
         if (res.data[0].studentFormToggle) {
           setShowStudentForm(true);
         }
