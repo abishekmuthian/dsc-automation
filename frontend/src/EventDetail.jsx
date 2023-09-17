@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import CalendarIllustration from './components/icons/illustration-calendar.svg';
-import IconExternalLink from './components/icons/IconExternalLink.jsx';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import CalendarIllustration from "./components/icons/illustration-calendar.svg";
+import IconExternalLink from "./components/icons/IconExternalLink.jsx";
 import {
   displayMeetingTime,
   getFormattedDate,
   getTimezoneCode,
-} from './utils/date';
+} from "./utils/date";
 import {
   isValidUrl,
   getOrganizerString,
@@ -16,33 +16,41 @@ import {
   initializeScrollShadow,
   handleScrollShadows,
   capitalizeString,
-} from './utils/calendar';
+} from "./utils/calendar";
 
 function EventDetail({ selectedEvent }) {
   const [showTopScrollShadow, setShowTopScrollShadow] = useState(false);
   const [showBottomScrollShadow, setShowBottomScrollShadow] = useState(false);
 
   useEffect(() => {
-    initializeScrollShadow('.description-container', setShowBottomScrollShadow);
+    initializeScrollShadow(".description-container", setShowBottomScrollShadow);
   }, [selectedEvent]);
 
   useEffect(() => {
-    window.addEventListener('resize', () =>
+    window.addEventListener("resize", () =>
       initializeScrollShadow(
-        '.description-container',
+        ".description-container",
         setShowBottomScrollShadow
       )
     );
 
     return () => {
-      window.removeEventListener('resize', () =>
+      window.removeEventListener("resize", () =>
         initializeScrollShadow(
-          '.description-container',
+          ".description-container",
           setShowBottomScrollShadow
         )
       );
     };
   }, []);
+
+  const handleNotify = (event) => {
+    let participants = [];
+    for (let i = 0; i < event.participants.length; i++) {
+      participants.push(event.participants[0]["email"]);
+    }
+    console.log("notify participants: ", participants);
+  };
 
   const renderConferencingDetails = (details) => {
     const passwordDetails = {
@@ -66,12 +74,12 @@ function EventDetail({ selectedEvent }) {
       );
     };
 
-    const getMeetingCode = () => details.meeting_code.replace(/\s/g, '');
+    const getMeetingCode = () => details.meeting_code.replace(/\s/g, "");
 
     const getDialOptionsString = details.phone?.map((phoneNumber) => (
       <div key={phoneNumber}>
         {phoneNumber}
-        {details.meeting_code ? `, ${getMeetingCode()}#` : ''}
+        {details.meeting_code ? `, ${getMeetingCode()}#` : ""}
       </div>
     ));
 
@@ -112,8 +120,8 @@ function EventDetail({ selectedEvent }) {
               <span>{getFormattedDate(selectedEvent)}</span>
               {dividerBullet}
               <span>
-                {selectedEvent.when.object === 'date'
-                  ? 'all day'
+                {selectedEvent.when.object === "date"
+                  ? "all day"
                   : displayMeetingTime(selectedEvent.when)}
                 {` (${getTimezoneCode()})`}
               </span>
@@ -129,7 +137,11 @@ function EventDetail({ selectedEvent }) {
 
             <div className="event-detail">
               <p className="truncate">
-                Organized by {getOrganizerString(selectedEvent)}
+                {/* Organized by {getOrganizerString(selectedEvent)} */}
+                Participants:{" "}
+                {selectedEvent.participants.map((p) => (
+                  <p>{p.email}</p>
+                ))}
               </p>
             </div>
             <div className="event-detail">
@@ -148,20 +160,24 @@ function EventDetail({ selectedEvent }) {
           >
             <div
               className={`scroll-shadow top${
-                showTopScrollShadow ? '' : ' hidden'
+                showTopScrollShadow ? "" : " hidden"
               }`}
             ></div>
             {selectedEvent.conferencing &&
               renderConferencingDetails(selectedEvent.conferencing.details)}
             <p className="title">Description</p>
+
             <p
               dangerouslySetInnerHTML={{
                 __html: cleanDescription(selectedEvent.description),
               }}
             ></p>
+            <button onClick={() => handleNotify(selectedEvent)}>
+              Notify Participants
+            </button>
             <div
               className={`scroll-shadow bottom${
-                showBottomScrollShadow ? '' : ' hidden'
+                showBottomScrollShadow ? "" : " hidden"
               }`}
             ></div>
           </div>

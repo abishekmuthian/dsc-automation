@@ -16,6 +16,8 @@ function CreateEventForm({
   setToastNotification,
   refresh,
   studentName = "",
+  studentEmail = "",
+  mcEmail = "",
 }) {
   const [startTime, setStartTime] = useState(getDefaultEventStartTime());
   const [endTime, setEndTime] = useState(getDefaultEventEndTime());
@@ -29,6 +31,9 @@ function CreateEventForm({
     if (studentName) {
       const newTitle = `Medical Counselor appointment with ${studentName}`;
       setTitle(newTitle);
+    }
+    if (studentEmail && mcEmail) {
+      setParticipants(studentEmail + "," + mcEmail);
     }
   }, [studentName]);
 

@@ -1,4 +1,4 @@
-import DOMPurify from 'dompurify';
+import DOMPurify from "dompurify";
 
 export const initializeScrollShadow = (cssSelector, setBottomShadow) => {
   const scrollElement = document.querySelector(cssSelector);
@@ -26,11 +26,11 @@ export const getOrganizerString = (event) => {
 
 export const getParticipantsString = (event) => {
   const participantCount = event.participants.length;
-  return `${participantCount} participant${participantCount === 1 ? '' : 's'}`;
+  return `${participantCount} participant${participantCount === 1 ? "" : "s"}`;
 };
 
 export const cleanDescription = (description) => {
-  if (!description) return 'No description.';
+  if (!description) return "No description.";
 
   let cleanedDescription = DOMPurify.sanitize(description, {
     USE_PROFILES: { html: true },

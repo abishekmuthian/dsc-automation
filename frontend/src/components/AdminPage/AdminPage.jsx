@@ -78,7 +78,9 @@ const AdminPage = ({
         setIsLoading={setIsLoading}
         events={events}
         refresh={refresh}
-        studentName={selectedStudent}
+        studentName={selectedStudent.name}
+        studentEmail={selectedStudent.email}
+        mcEmail={admin.medicalCounselorEmail}
       />
     );
   return (
@@ -132,7 +134,7 @@ const AdminPage = ({
                   <td>{input.studentId}</td>
                   <td>{input.name}</td>
                   <td>
-                    <button onClick={() => handleEventCreator(input.name)}>
+                    <button onClick={() => handleEventCreator(input)}>
                       Schedule
                     </button>
                   </td>

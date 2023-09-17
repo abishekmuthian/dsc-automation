@@ -15,6 +15,8 @@ function CalendarApp({
   events,
   refresh,
   studentName = "",
+  studentEmail = "",
+  mcEmail = "",
 }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showCreateEventForm, setShowCreateEventForm] = useState(false);
@@ -68,6 +70,8 @@ function CalendarApp({
               setToastNotification={setToastNotification}
               refresh={refresh}
               studentName={studentName}
+              studentEmail={studentEmail}
+              mcEmail={mcEmail}
             />
           ) : (
             <EventDetail selectedEvent={selectedEvent} />
