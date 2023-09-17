@@ -236,6 +236,15 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 // get stored user data from sqlite db using prims
+app.post("/send/email-notification", async (req, res) => {
+  const { participants } = req.body;
+  console.log("backend - participants : ", participants);
+
+  res.json({
+    message: "success",
+  });
+});
+
 app.get("/get/admin-data", async (req, res) => {
   const adminData = await prisma.user.findMany();
   console.log("admin data from  server: ", adminData);

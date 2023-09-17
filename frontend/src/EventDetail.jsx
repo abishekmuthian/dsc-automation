@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import CalendarIllustration from "./components/icons/illustration-calendar.svg";
 import IconExternalLink from "./components/icons/IconExternalLink.jsx";
@@ -47,10 +48,22 @@ function EventDetail({ selectedEvent }) {
   const handleNotify = (event) => {
     let participants = [];
     for (let i = 0; i < event.participants.length; i++) {
-      participants.push(event.participants[0]["email"]);
+      participants.push(event.participants[i]["email"]);
     }
-    console.log("notify participants: ", participants);
+    console.log("notify participants frontend: ", participants.join(","));
+
+    const url = serverBaseUrl + "/send/email-notification";
+    axios
+      .post(url, {
+        participants: participants.join(","),
+      })
+      .then((response) => {
+        console.log("res: ", response.data);
+      });
   };
+
+  const serverBaseUrl =
+    import.meta.env.VITE_SERVER_URI || "http://localhost:9000";
 
   const renderConferencingDetails = (details) => {
     const passwordDetails = {
