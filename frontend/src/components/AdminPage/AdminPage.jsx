@@ -2,6 +2,8 @@ import React, { useEffect, useCallback, useRef, useState } from "react";
 import Switch from "react-switch";
 import axios from "axios";
 import CalendarApp from "../../CalendarApp";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const AdminPage = ({
   admin,
@@ -59,6 +61,50 @@ const AdminPage = ({
     },
     [checked]
   );
+
+  const handleDownload = (student) => {
+    const unit = "pt";
+    const size = "A4";
+    const orientation = "portrait";
+
+    const marginLeft = 40;
+    const doc = new jsPDF(orientation, unit, size);
+
+    doc.setFontSize(15);
+    let studentDataArray = [];
+    for (let key in student) {
+      studentDataArray.push({ [key]: student[key] });
+    }
+    console.log("studnt array: ", studentDataArray);
+
+    let headings = Object.keys(student);
+    let studentKeyValueArr = Object.entries(student);
+
+    const title = "Student Disability Data";
+
+    const headers = [[...headings]];
+
+    let content = {
+      startY: 70,
+      startX: 100,
+      body: studentKeyValueArr,
+      theme: "grid",
+      columnStyles: {
+        0: {
+          cellWidth: 150,
+          fillColor: [33, 53, 113],
+          textColor: "white",
+          cellPadding: 10,
+          fontSize: 10,
+        },
+        1: { cellWidth: 350, fontSize: 10 },
+      },
+    };
+
+    doc.text(title, marginLeft, 40);
+    doc.autoTable(content);
+    doc.save(`${student.studentId}-${student.name}-data.pdf`);
+  };
 
   const handleEventCreator = useCallback(
     (name) => {
@@ -126,6 +172,7 @@ const AdminPage = ({
                 <td>Student Id</td>
                 <td>Student Name</td>
                 <td>Schedule</td>
+                <td>Download</td>
               </tr>
             </thead>
             <tbody>
@@ -136,6 +183,11 @@ const AdminPage = ({
                   <td>
                     <button onClick={() => handleEventCreator(input)}>
                       Schedule
+                    </button>
+                  </td>
+                  <td>
+                    <button onClick={() => handleDownload(input)}>
+                      Download
                     </button>
                   </td>
                 </tr>
