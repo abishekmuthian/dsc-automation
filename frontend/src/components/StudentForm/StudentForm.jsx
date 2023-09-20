@@ -325,6 +325,136 @@ const StudentForm = ({}) => {
                 Attention-Deficit/Hyperactivity Disorder (AD/HD)
               </label>
             </div>
+            <div>
+              <input
+                type="checkbox"
+                name="disability"
+                value="Anxiety Disorders"
+                id="disbilityCheckBox"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox">Anxiety Disorders</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="disability"
+                value="Autism Spectrum Disorder"
+                id="disbilityCheckBox"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox">
+                Autism Spectrum Disorder
+              </label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="disability"
+                value="Blind/Low Vision"
+                id="disbilityCheckBox"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox">Blind/Low Vision</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="disability"
+                value="Deaf and Hearing Impairments"
+                id="disbilityCheckBox"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox">
+                Deaf and Hearing Impairments
+              </label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="disability"
+                value="Reading Disorder"
+                id="disbilityCheckBox"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox">Reading Disorder</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="disability"
+                value="Mathematics Disorder"
+                id="disbilityCheckBox"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox">Mathematics Disorder</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="disability"
+                value="Written Expression Disorder"
+                id="disbilityCheckBox"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox">
+                Written Expression Disorder
+              </label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="disability"
+                value="Communication Disorder"
+                id="disbilityCheckBox"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox">Communication Disorder</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="disability"
+                value="Medical & Chronic Health Related Impairments"
+                id="disbilityCheckBox"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox">
+                Medical & Chronic Health Related Impairments
+              </label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="disability"
+                value="Mobility Impairments"
+                id="disbilityCheckBox"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox">Mobility Impairments</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="disability"
+                value="Pervasive Developmental Disorder"
+                id="disbilityCheckBox"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox">
+                Pervasive Developmental Disorder
+              </label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="disability"
+                value="Traumatic Brain Injury"
+                id="disbilityCheckBox"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox">Traumatic Brain Injury</label>
+            </div>
           </div>
           <div className="form_input_hr">
             <label htmlFor="other">
