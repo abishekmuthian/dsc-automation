@@ -43,7 +43,7 @@ const Layout = ({
         {showAdminLogin && (
           <div className="menu">
             <button onClick={() => handleShowStudentForm(false)}>
-              <span className="hidden-mobile">Admin Login</span>
+              <span className="">Admin Login</span>
             </button>{" "}
           </div>
         )}

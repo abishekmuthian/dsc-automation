@@ -33,6 +33,7 @@ model StudentForm {
   contact String
   guardian String
   guardianContact String
+  guardianEmail String
   other String
   otherDetails String
   crossSchool String

@@ -153,9 +153,12 @@ const AdminPage = ({
         />
       </div>
       <br />
-      <button onClick={() => setShowData(!showData)}>
-        {showData ? "Hide" : "Show"} Student Input
-      </button>
+      {studentInputs.length > 0 ? (
+        <button onClick={() => setShowData(!showData)}>
+          {showData ? "Hide" : "Show"} Student Input
+        </button>
+      ) : null}
+
       {/* {showData && (
         <ul>
           {studentInputs.map((input, index) => (
