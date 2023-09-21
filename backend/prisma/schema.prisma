@@ -24,7 +24,7 @@ model StudentForm {
   id    Int     @id @default(autoincrement())
   studentId String @unique
   name  String
-  email String  
+  email String @unique
   disability String
   programme String
   courseType String
