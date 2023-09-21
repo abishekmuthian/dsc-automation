@@ -334,10 +334,10 @@ const StudentForm = ({}) => {
                 type="checkbox"
                 name="disability"
                 value="Attention-Deficit/Hyperactivity Disorder (AD/HD)"
-                id="disbilityCheckBox"
+                id="disbilityCheckBox-Attention"
                 onChange={handleDisabilityChange}
               />
-              <label htmlFor="disbilityCheckBox">
+              <label htmlFor="disbilityCheckBox-Attention">
                 Attention-Deficit/Hyperactivity Disorder (AD/HD)
               </label>
             </div>
@@ -346,20 +346,22 @@ const StudentForm = ({}) => {
                 type="checkbox"
                 name="disability"
                 value="Anxiety Disorders"
-                id="disbilityCheckBox"
+                id="disbilityCheckBox-Anxiety"
                 onChange={handleDisabilityChange}
               />
-              <label htmlFor="disbilityCheckBox">Anxiety Disorders</label>
+              <label htmlFor="disbilityCheckBox-Anxiety">
+                Anxiety Disorders
+              </label>
             </div>
             <div>
               <input
                 type="checkbox"
                 name="disability"
                 value="Autism Spectrum Disorder"
-                id="disbilityCheckBox"
+                id="disbilityCheckBox-Autism"
                 onChange={handleDisabilityChange}
               />
-              <label htmlFor="disbilityCheckBox">
+              <label htmlFor="disbilityCheckBox-Autism">
                 Autism Spectrum Disorder
               </label>
             </div>
@@ -368,20 +370,20 @@ const StudentForm = ({}) => {
                 type="checkbox"
                 name="disability"
                 value="Blind/Low Vision"
-                id="disbilityCheckBox"
+                id="disbilityCheckBox-Blind"
                 onChange={handleDisabilityChange}
               />
-              <label htmlFor="disbilityCheckBox">Blind/Low Vision</label>
+              <label htmlFor="disbilityCheckBox-Blind">Blind/Low Vision</label>
             </div>
             <div>
               <input
                 type="checkbox"
                 name="disability"
                 value="Deaf and Hearing Impairments"
-                id="disbilityCheckBox"
+                id="disbilityCheckBox-Deaf"
                 onChange={handleDisabilityChange}
               />
-              <label htmlFor="disbilityCheckBox">
+              <label htmlFor="disbilityCheckBox-Deaf">
                 Deaf and Hearing Impairments
               </label>
             </div>
@@ -390,30 +392,34 @@ const StudentForm = ({}) => {
                 type="checkbox"
                 name="disability"
                 value="Reading Disorder"
-                id="disbilityCheckBox"
+                id="disbilityCheckBox-Reading"
                 onChange={handleDisabilityChange}
               />
-              <label htmlFor="disbilityCheckBox">Reading Disorder</label>
+              <label htmlFor="disbilityCheckBox-Reading">
+                Reading Disorder
+              </label>
             </div>
             <div>
               <input
                 type="checkbox"
                 name="disability"
                 value="Mathematics Disorder"
-                id="disbilityCheckBox"
+                id="disbilityCheckBox-Mathematics"
                 onChange={handleDisabilityChange}
               />
-              <label htmlFor="disbilityCheckBox">Mathematics Disorder</label>
+              <label htmlFor="disbilityCheckBox-Mathematics">
+                Mathematics Disorder
+              </label>
             </div>
             <div>
               <input
                 type="checkbox"
                 name="disability"
                 value="Written Expression Disorder"
-                id="disbilityCheckBox"
+                id="disbilityCheckBox-Written"
                 onChange={handleDisabilityChange}
               />
-              <label htmlFor="disbilityCheckBox">
+              <label htmlFor="disbilityCheckBox-Written">
                 Written Expression Disorder
               </label>
             </div>
@@ -422,20 +428,22 @@ const StudentForm = ({}) => {
                 type="checkbox"
                 name="disability"
                 value="Communication Disorder"
-                id="disbilityCheckBox"
+                id="disbilityCheckBox-Communication"
                 onChange={handleDisabilityChange}
               />
-              <label htmlFor="disbilityCheckBox">Communication Disorder</label>
+              <label htmlFor="disbilityCheckBox-Communication">
+                Communication Disorder
+              </label>
             </div>
             <div>
               <input
                 type="checkbox"
                 name="disability"
                 value="Medical & Chronic Health Related Impairments"
-                id="disbilityCheckBox"
+                id="disbilityCheckBox-Medical"
                 onChange={handleDisabilityChange}
               />
-              <label htmlFor="disbilityCheckBox">
+              <label htmlFor="disbilityCheckBox-Medical">
                 Medical & Chronic Health Related Impairments
               </label>
             </div>
@@ -444,20 +452,22 @@ const StudentForm = ({}) => {
                 type="checkbox"
                 name="disability"
                 value="Mobility Impairments"
-                id="disbilityCheckBox"
+                id="disbilityCheckBox-Mobility"
                 onChange={handleDisabilityChange}
               />
-              <label htmlFor="disbilityCheckBox">Mobility Impairments</label>
+              <label htmlFor="disbilityCheckBox-Mobility">
+                Mobility Impairments
+              </label>
             </div>
             <div>
               <input
                 type="checkbox"
                 name="disability"
                 value="Pervasive Developmental Disorder"
-                id="disbilityCheckBox"
+                id="disbilityCheckBox-Pervasive"
                 onChange={handleDisabilityChange}
               />
-              <label htmlFor="disbilityCheckBox">
+              <label htmlFor="disbilityCheckBox-Pervasive">
                 Pervasive Developmental Disorder
               </label>
             </div>
@@ -466,10 +476,12 @@ const StudentForm = ({}) => {
                 type="checkbox"
                 name="disability"
                 value="Traumatic Brain Injury"
-                id="disbilityCheckBox"
+                id="disbilityCheckBox-Traumatic"
                 onChange={handleDisabilityChange}
               />
-              <label htmlFor="disbilityCheckBox">Traumatic Brain Injury</label>
+              <label htmlFor="disbilityCheckBox-Traumatic">
+                Traumatic Brain Injury
+              </label>
             </div>
           </div>
           <div className="form_input_hr">
