@@ -61,6 +61,7 @@ function CreateEventForm({
           description,
           calendarId,
           participants,
+          studentName,
         }),
       });
       console.log("res : ", res);
