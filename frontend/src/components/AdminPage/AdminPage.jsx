@@ -127,6 +127,7 @@ const AdminPage = ({
         studentName={selectedStudent.name}
         studentEmail={selectedStudent.email}
         mcEmail={admin.medicalCounselorEmail}
+        mcName={admin.medicalCounselorName}
       />
     );
   return (

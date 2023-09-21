@@ -19,7 +19,7 @@ import {
   capitalizeString,
 } from "./utils/calendar";
 
-function EventDetail({ selectedEvent }) {
+function EventDetail({ selectedEvent, mcName }) {
   const [showTopScrollShadow, setShowTopScrollShadow] = useState(false);
   const [showBottomScrollShadow, setShowBottomScrollShadow] = useState(false);
 
@@ -50,15 +50,23 @@ function EventDetail({ selectedEvent }) {
     for (let i = 0; i < event.participants.length; i++) {
       participants.push(event.participants[i]["email"]);
     }
-    console.log("notify participants frontend: ", participants.join(","));
 
+    let mcEmail = event.participants[0]["email"];
+    let studentEmail = event.participants[1]["email"];
+    let studentName = event.title.split(" ")[event.title.split(" ").length - 1];
     const url = serverBaseUrl + "/send/email-notification";
     axios
       .post(url, {
-        participants: participants.join(","),
+        // participants: participants.join(","),
+        participants: {
+          mcEmail,
+          mcName,
+          studentEmail,
+          studentName,
+        },
       })
       .then((response) => {
-        console.log("res: ", response.data);
+        console.log("res notify: ", response.data);
       });
   };
 
@@ -157,9 +165,9 @@ function EventDetail({ selectedEvent }) {
                 ))}
               </p>
             </div>
-            <div className="event-detail">
+            {/* <div className="event-detail">
               {getParticipantsString(selectedEvent)}
-            </div>
+            </div> */}
           </div>
           <div
             className="description-container scrollbar"

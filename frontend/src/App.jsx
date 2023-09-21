@@ -262,6 +262,7 @@ function App() {
             setIsLoading={setIsLoading}
             events={events}
             refresh={refresh}
+            mcName={admin.medicalCounselorName}
           />
         </div>
       )}

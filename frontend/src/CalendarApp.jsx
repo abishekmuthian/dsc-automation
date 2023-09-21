@@ -17,20 +17,16 @@ function CalendarApp({
   studentName = "",
   studentEmail = "",
   mcEmail = "",
+  mcName = "",
 }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showCreateEventForm, setShowCreateEventForm] = useState(false);
   const [toastNotification, setToastNotification] = useState("");
-  // console.log("studentName: ", studentName);
-  // console.log(typeof userId, userId);
-  // console.log("form flag1: ", showCreateEventForm);
   useEffect(() => {
     if (studentName) {
-      // console.log("student event shoud create now: ", studentName);
       setShowCreateEventForm(true);
     }
   }, []);
-  // console.log("form flag2: ", showCreateEventForm);
 
   return (
     <>
@@ -74,7 +70,7 @@ function CalendarApp({
               mcEmail={mcEmail}
             />
           ) : (
-            <EventDetail selectedEvent={selectedEvent} />
+            <EventDetail selectedEvent={selectedEvent} mcName={mcName} />
           )}
         </>
       </div>
