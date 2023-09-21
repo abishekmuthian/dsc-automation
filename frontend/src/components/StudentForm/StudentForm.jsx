@@ -17,6 +17,7 @@ const StudentForm = ({}) => {
   const contactRef = useRef(null);
   const guardianRef = useRef(null);
   const guardianContactRef = useRef(null);
+  const guardianEmailRef = useRef(null);
   const crossSchoolRef = useRef(null);
   const genderRef = useRef(null);
   const mandatoryRef = useRef(null);
@@ -125,6 +126,7 @@ const StudentForm = ({}) => {
     formInputs.contact = contactRef.current.value;
     formInputs.guardian = guardianRef.current.value;
     formInputs.guardianContact = guardianContactRef.current.value;
+    formInputs.guardianEmail = guardianEmailRef.current.value;
     formInputs.other = otherRef.current.value;
     formInputs.otherDetails = otherDetailsRef.current.value;
     formInputs.crossSchool = crossSchoolRef.current.value;
@@ -313,6 +315,20 @@ const StudentForm = ({}) => {
             />
           </div>
           <div className="form_input_hr">
+            <label htmlFor="guardian-contact">Guardian's emaill address</label>
+            <input
+              type="text"
+              id="guardian-contact"
+              ref={guardianEmailRef}
+              className="form_text_input"
+              placeholder="guardian email"
+              required
+            />
+          </div>
+          <div className="form_input_hr">
+            <label htmlFor="">
+              Nature of Student's Physical/Medical/Psychological Condition
+            </label>
             <div>
               <input
                 type="checkbox"
