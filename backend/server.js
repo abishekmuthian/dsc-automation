@@ -240,6 +240,17 @@ app.post("/send/email-notification", async (req, res) => {
   const { participants } = req.body;
   console.log("backend - participants : ", participants);
 
+  // Find the student's disability
+
+  student = await prisma.studentForm.findUnique({
+    where: {
+      // id: parseInt(user.id),
+      email: participants[1],
+    },
+  });
+
+  console.log("Student data: ", student);
+
   res.json({
     message: "success",
   });
