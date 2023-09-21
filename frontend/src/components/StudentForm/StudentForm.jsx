@@ -229,21 +229,23 @@ const StudentForm = ({}) => {
               <input
                 type="radio"
                 value="Full-Time"
+                id="course-fulltime"
                 name="courseType"
                 checked={courseType === "Full-Time"}
                 onChange={onCourseTypeChange}
               />
-              <label htmlFor="courseType">Full Time</label>
+              <label htmlFor="course-fulltime">Full Time</label>
             </div>
             <div>
               <input
                 type="radio"
                 value="Part-Time"
                 name="courseType"
+                id="course-parttime"
                 checked={courseType === "Part-Time"}
                 onChange={onCourseTypeChange}
               />
-              <label htmlFor="courseType">Part Time</label>
+              <label htmlFor="course-parttime">Part Time</label>
             </div>
           </div>
           <div className="form_input_hr">
@@ -542,8 +544,8 @@ const StudentForm = ({}) => {
           <div className="form_input_hr">
             <p>DECLARATION & AGREEMENT (PLEASE CLICK BELOW AFTER READING)</p>
             <div>
-              <input type="radio" name="courseType" onChange={onAgree} />
-              <label htmlFor="courseType">I AGREE WITH THE ABOVE</label>
+              <input type="radio" name="agree" id="agree" onChange={onAgree} />
+              <label htmlFor="agree">I agree with the above</label>
             </div>
           </div>
         </div>
