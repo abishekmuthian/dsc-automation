@@ -124,6 +124,7 @@ const AdminPage = ({
         setIsLoading={setIsLoading}
         events={events}
         refresh={refresh}
+        studentId={selectedStudent.studentId}
         studentName={selectedStudent.name}
         studentEmail={selectedStudent.email}
         mcEmail={admin.medicalCounselorEmail}

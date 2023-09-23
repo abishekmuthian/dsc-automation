@@ -14,6 +14,7 @@ function CalendarApp({
   setIsLoading,
   events,
   refresh,
+  studentId = "",
   studentName = "",
   studentEmail = "",
   mcEmail = "",
@@ -65,6 +66,7 @@ function CalendarApp({
               toastNotification={toastNotification}
               setToastNotification={setToastNotification}
               refresh={refresh}
+              studentId={studentId}
               studentName={studentName}
               studentEmail={studentEmail}
               mcEmail={mcEmail}
