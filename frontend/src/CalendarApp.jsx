@@ -70,7 +70,11 @@ function CalendarApp({
               mcEmail={mcEmail}
             />
           ) : (
-            <EventDetail selectedEvent={selectedEvent} mcName={mcName} />
+            <EventDetail
+              selectedEvent={selectedEvent}
+              mcName={mcName}
+              mcEmail={mcEmail}
+            />
           )}
         </>
       </div>

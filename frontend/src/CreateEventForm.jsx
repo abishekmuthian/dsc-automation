@@ -57,7 +57,8 @@ function CreateEventForm({
         body: JSON.stringify({
           startTime: applyTimezone(startTime),
           endTime: applyTimezone(endTime),
-          title,
+          // title,
+          title: `${title}:${studentEmail}`,
           description,
           calendarId,
           participants,
