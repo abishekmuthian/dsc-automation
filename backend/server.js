@@ -245,12 +245,23 @@ app.post("/send/email-notification", async (req, res) => {
   student = await prisma.studentForm.findUnique({
     where: {
       // id: parseInt(user.id),
-      email: participants[1],
+      email: participants.studentEmail,
     },
   });
 
   console.log("Student data: ", student);
 
+  studentDisabilities =  student.disability.split(",");
+
+  emailBody = student.name + " is living with "+studentDisabilities.toString()+".";
+  emailBody = emailBody + "<br>"; 
+
+  emailBody = emailBody + studentDisabilities.forEach(function(value, item, index){
+   getInclusivePedagogy(value, item, index, emailBody);
+  });
+
+  console.log("emailBody: ", emailBody);
+    
   res.json({
     message: "success",
   });
@@ -366,7 +377,7 @@ app.get("/get/student-input", async (req, res) => {
 });
 
 // Fetch the inclusive pedagogy from open AI for the disease mentioned by the student in the form
-async function getInclusivePedagogy(disability) {
+async function getInclusivePedagogy(disability, index, array, emailBody) {
   if (disability.trim().length === 0) {
     res.status(400).json({
       error: {
@@ -377,13 +388,24 @@ async function getInclusivePedagogy(disability) {
   }
 
   try {
-    const completion = await openai.completions.create({
-      model: "text-davinci-003",
-      prompt: "Inclusive pedagogy for " + disability,
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {"role": "system", "content": "You are a helpful assistant advising inclusive pedagogy for different disabilities."},
+        {"role": "user", "content": disability}
+      ],
       temperature: 0.6,
-      max_tokens: 30,
+      max_tokens: 600,
     });
-    return completion.data.choices[0].text;
+
+    inclusivePedagogy = completion.choices[0].message.content;
+
+    // console.log("Inclusive pedagogy: ", inclusivePedagogy);
+    emailBody =  emailBody + inclusivePedagogy;
+    emailBody = emailBody + "<br>";
+
+    console.log("Inclusive pedagogy: ", emailBody);
+    
   } catch (error) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
