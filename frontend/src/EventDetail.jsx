@@ -19,7 +19,7 @@ import {
   capitalizeString,
 } from "./utils/calendar";
 
-function EventDetail({ selectedEvent, mcName }) {
+function EventDetail({ selectedEvent, mcName, mcEmail }) {
   const [showTopScrollShadow, setShowTopScrollShadow] = useState(false);
   const [showBottomScrollShadow, setShowBottomScrollShadow] = useState(false);
 
@@ -51,9 +51,12 @@ function EventDetail({ selectedEvent, mcName }) {
       participants.push(event.participants[i]["email"]);
     }
 
-    let mcEmail = event.participants[0]["email"];
-    let studentEmail = event.participants[1]["email"];
-    let studentName = event.title.split(" ")[event.title.split(" ").length - 1];
+    // let mcEmail = event.participants[0]["email"];
+    // let studentEmail = event.participants[1]["email"];
+    let studentEmail = event.title.split(":")[1];
+    let studentName = event.title
+      .split(" ")
+      [event.title.split(" ").length - 1].split(":")[0];
     const url = serverBaseUrl + "/send/email-notification";
     axios
       .post(url, {
@@ -135,7 +138,9 @@ function EventDetail({ selectedEvent, mcName }) {
         <div className="selected">
           <div className="details">
             <div className="event-detail">
-              <span className="title truncate">{selectedEvent.title}</span>
+              <span className="title truncate">{`${
+                selectedEvent.title.split(":")[0]
+              }`}</span>
             </div>
             <div className="event-detail">
               <span>{getFormattedDate(selectedEvent)}</span>
