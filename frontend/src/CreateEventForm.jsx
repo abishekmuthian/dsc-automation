@@ -15,6 +15,7 @@ function CreateEventForm({
   setShowCreateEventForm,
   setToastNotification,
   refresh,
+  studentId = "",
   studentName = "",
   studentEmail = "",
   mcEmail = "",
@@ -29,7 +30,7 @@ function CreateEventForm({
   const [description, setDescription] = useState("");
   useEffect(() => {
     if (studentName) {
-      const newTitle = `Medical Counselor appointment with ${studentName}`;
+      const newTitle = `${studentId} | ${studentName} | ${studentEmail}`;
       setTitle(newTitle);
     }
     if (studentEmail && mcEmail) {
@@ -57,8 +58,8 @@ function CreateEventForm({
         body: JSON.stringify({
           startTime: applyTimezone(startTime),
           endTime: applyTimezone(endTime),
-          // title,
-          title: `${title}:${studentEmail}`,
+          title,
+          // title: `${title}|${studentEmail}`,
           description,
           calendarId,
           participants,

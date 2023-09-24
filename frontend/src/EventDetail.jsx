@@ -53,10 +53,9 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
 
     // let mcEmail = event.participants[0]["email"];
     // let studentEmail = event.participants[1]["email"];
-    let studentEmail = event.title.split(":")[1];
-    let studentName = event.title
-      .split(" ")
-      [event.title.split(" ").length - 1].split(":")[0];
+    let studentEmail = event.title.split("|")[2].trim();
+    let studentName = event.title.split("|")[1].trim();
+
     const url = serverBaseUrl + "/send/email-notification";
     axios
       .post(url, {
