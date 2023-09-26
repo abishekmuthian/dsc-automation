@@ -132,7 +132,15 @@ const AdminPage = ({
       />
     );
   return (
-    <div className="app-card">
+    <div
+      className="app-card"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <div>
         <h2>
           Settings Page{" "}

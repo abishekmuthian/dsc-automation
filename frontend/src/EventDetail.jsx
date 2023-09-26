@@ -50,7 +50,7 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
     for (let i = 0; i < event.participants.length; i++) {
       participants.push(event.participants[i]["email"]);
     }
-
+    console.log("organizer details: ", getOrganizerString(event));
     // let mcEmail = event.participants[0]["email"];
     // let studentEmail = event.participants[1]["email"];
     let studentEmail = event.title.split("|")[2].trim();
