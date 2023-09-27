@@ -156,50 +156,61 @@ const StudentForm = ({}) => {
   if (dataStored) return <StudentDetailSaved />;
 
   return (
-    <section className="form_page">
-      {/* <button
-        style={{ float: "right" }}
-        onClick={() => handleShowStudentForm(false)}
-      >
-        Admin Login
-      </button> */}
-      <form className="student_form" onSubmit={handleSubmit}>
-        <h2>Student Form</h2>
-        <div className="form_inputs">
-          <div className="form_input_hr">
-            <label htmlFor="studentId">Student Id</label>
-            <input
-              type="text"
-              id="studentId"
-              ref={studentIdRef}
-              className="form_text_input"
-              placeholder="Student Id"
-              required
-            />
-          </div>
-          <div className="form_input_hr">
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              ref={nameRef}
-              className="form_text_input"
-              placeholder="Student full Name"
-              required
-            />
-          </div>
-          <div className="form_input_hr">
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              id="email"
-              ref={emailRef}
-              className="form_text_input"
-              placeholder="Email id"
-              required
-            />
-          </div>
-          {/* <div>
+    <section
+      className="student_form_page"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+
+        alignContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {" "}
+      <h2>Student Form</h2>
+      <div className="form_page">
+        <form
+          className="student_form"
+          onSubmit={handleSubmit}
+          style={{
+            padding: "30px",
+          }}
+        >
+          <div className="form_inputs">
+            <div className="form_input_hr">
+              <label htmlFor="studentId">Student Id</label>
+              <input
+                type="text"
+                id="studentId"
+                ref={studentIdRef}
+                className="form_text_input"
+                placeholder="Student Id"
+                required
+              />
+            </div>
+            <div className="form_input_hr">
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                ref={nameRef}
+                className="form_text_input"
+                placeholder="Student full Name"
+                required
+              />
+            </div>
+            <div className="form_input_hr">
+              <label htmlFor="email">Email</label>
+              <input
+                type="text"
+                id="email"
+                ref={emailRef}
+                className="form_text_input"
+                placeholder="Email id"
+                required
+              />
+            </div>
+            {/* <div>
             <label htmlFor="text">
               Disability
               <select onChange={handleChange} ref={disabilityRef} required>
@@ -212,345 +223,344 @@ const StudentForm = ({}) => {
               </select>
             </label>
           </div> */}
-          <div className="form_input_hr">
-            <label htmlFor="programme">Programme</label>
-            <input
-              type="text"
-              id="programme"
-              ref={programmeRef}
-              className="form_text_input"
-              placeholder="Programme"
-              required
-            />
-          </div>
-          <div className="form_input_hr">
-            <p>Select Course Type</p>
-            <div>
+            <div className="form_input_hr">
+              <label htmlFor="programme">Programme</label>
               <input
-                type="radio"
-                value="Full-Time"
-                id="course-fulltime"
-                name="courseType"
-                checked={courseType === "Full-Time"}
-                onChange={onCourseTypeChange}
+                type="text"
+                id="programme"
+                ref={programmeRef}
+                className="form_text_input"
+                placeholder="Programme"
+                required
               />
-              <label htmlFor="course-fulltime">Full Time</label>
             </div>
-            <div>
-              <input
-                type="radio"
-                value="Part-Time"
-                name="courseType"
-                id="course-parttime"
-                checked={courseType === "Part-Time"}
-                onChange={onCourseTypeChange}
-              />
-              <label htmlFor="course-parttime">Part Time</label>
+            <div className="form_input_hr">
+              <p>Select Course Type</p>
+              <div>
+                <input
+                  type="radio"
+                  value="Full-Time"
+                  id="course-fulltime"
+                  name="courseType"
+                  checked={courseType === "Full-Time"}
+                  onChange={onCourseTypeChange}
+                />
+                <label htmlFor="course-fulltime">Full Time</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  value="Part-Time"
+                  name="courseType"
+                  id="course-parttime"
+                  checked={courseType === "Part-Time"}
+                  onChange={onCourseTypeChange}
+                />
+                <label htmlFor="course-parttime">Part Time</label>
+              </div>
             </div>
-          </div>
-          <div className="form_input_hr">
-            <label htmlFor="dob">Date Of Birth</label>
-            <input
-              type="date"
-              id="dob"
-              ref={dobRef}
-              className="form_text_input"
-              required
-            />
-          </div>
-          {/* <div>
-            <label htmlFor="gender">Gender</label>
-            <input
-              type="text"
-              id="gender"
-              ref={genderRef}
-              className="form_text_input"
-              placeholder="gender"
-              required
-            />
-          </div> */}
-          <div className="form_input_hr">
-            <label htmlFor="text">
-              Gender
-              <select onChange={handleGenderChange} ref={genderRef} required>
-                <option value="">Select Gender</option>
-                <option value="Female">Female</option>
-                <option value="Male">Male</option>
-                <option value="Other">Other</option>
-              </select>
-            </label>
-          </div>
-          {/* /////// */}
-          <div className="form_input_hr">
-            <label htmlFor="contact">Student Contact No</label>
-            <input
-              type="text"
-              id="contact"
-              ref={contactRef}
-              className="form_text_input"
-              placeholder="Student contact number"
-              required
-            />
-          </div>
-          <div className="form_input_hr">
-            <label htmlFor="guardian">Guardian's Name</label>
-            <input
-              type="text"
-              id="guardian"
-              ref={guardianRef}
-              className="form_text_input"
-              placeholder="Guardian's name"
-              required
-            />
-          </div>
-          <div className="form_input_hr">
-            <label htmlFor="guardian-contact">
-              Guardian's phone number (for emergencies)
-            </label>
-            <input
-              type="text"
-              id="guardian-contact"
-              ref={guardianContactRef}
-              className="form_text_input"
-              placeholder="guardian contact number"
-              required
-            />
-          </div>
-          <div className="form_input_hr">
-            <label htmlFor="guardian-contact">Guardian's emaill address</label>
-            <input
-              type="text"
-              id="guardian-contact"
-              ref={guardianEmailRef}
-              className="form_text_input"
-              placeholder="guardian email"
-              required
-            />
-          </div>
-          <div className="form_input_hr">
-            <label htmlFor="">
-              Nature of Student's Physical/Medical/Psychological Condition
-            </label>
-            <div>
+            <div className="form_input_hr">
+              <label htmlFor="dob">Date Of Birth</label>
               <input
-                type="checkbox"
-                name="disability"
-                value="Attention-Deficit/Hyperactivity Disorder (AD/HD)"
-                id="disbilityCheckBox-Attention"
-                onChange={handleDisabilityChange}
+                type="date"
+                id="dob"
+                ref={dobRef}
+                className="form_text_input"
+                required
               />
-              <label htmlFor="disbilityCheckBox-Attention">
-                Attention-Deficit/Hyperactivity Disorder (AD/HD)
+            </div>
+            <div className="form_input_hr">
+              <label htmlFor="text">
+                Gender
+                <select onChange={handleGenderChange} ref={genderRef} required>
+                  <option value="">Select Gender</option>
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Other">Other</option>
+                </select>
               </label>
             </div>
-            <div>
+
+            <div className="form_input_hr">
+              <label htmlFor="contact">Student Contact No</label>
               <input
-                type="checkbox"
-                name="disability"
-                value="Anxiety Disorders"
-                id="disbilityCheckBox-Anxiety"
-                onChange={handleDisabilityChange}
+                type="text"
+                id="contact"
+                ref={contactRef}
+                className="form_text_input"
+                placeholder="Student contact number"
+                required
               />
-              <label htmlFor="disbilityCheckBox-Anxiety">
-                Anxiety Disorders
-              </label>
             </div>
-            <div>
+            <div className="form_input_hr">
+              <label htmlFor="guardian">Guardian's Name</label>
               <input
-                type="checkbox"
-                name="disability"
-                value="Autism Spectrum Disorder"
-                id="disbilityCheckBox-Autism"
-                onChange={handleDisabilityChange}
+                type="text"
+                id="guardian"
+                ref={guardianRef}
+                className="form_text_input"
+                placeholder="Guardian's name"
+                required
               />
-              <label htmlFor="disbilityCheckBox-Autism">
-                Autism Spectrum Disorder
-              </label>
             </div>
-            <div>
-              <input
-                type="checkbox"
-                name="disability"
-                value="Blind/Low Vision"
-                id="disbilityCheckBox-Blind"
-                onChange={handleDisabilityChange}
-              />
-              <label htmlFor="disbilityCheckBox-Blind">Blind/Low Vision</label>
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                name="disability"
-                value="Deaf and Hearing Impairments"
-                id="disbilityCheckBox-Deaf"
-                onChange={handleDisabilityChange}
-              />
-              <label htmlFor="disbilityCheckBox-Deaf">
-                Deaf and Hearing Impairments
+            <div className="form_input_hr">
+              <label htmlFor="guardian-contact">
+                Guardian's phone number (for emergencies)
               </label>
-            </div>
-            <div>
               <input
-                type="checkbox"
-                name="disability"
-                value="Reading Disorder"
-                id="disbilityCheckBox-Reading"
-                onChange={handleDisabilityChange}
+                type="text"
+                id="guardian-contact"
+                ref={guardianContactRef}
+                className="form_text_input"
+                placeholder="guardian contact number"
+                required
               />
-              <label htmlFor="disbilityCheckBox-Reading">
-                Reading Disorder
-              </label>
             </div>
-            <div>
-              <input
-                type="checkbox"
-                name="disability"
-                value="Mathematics Disorder"
-                id="disbilityCheckBox-Mathematics"
-                onChange={handleDisabilityChange}
-              />
-              <label htmlFor="disbilityCheckBox-Mathematics">
-                Mathematics Disorder
+            <div className="form_input_hr">
+              <label htmlFor="guardian-contact">
+                Guardian's emaill address
               </label>
+              <input
+                type="text"
+                id="guardian-contact"
+                ref={guardianEmailRef}
+                className="form_text_input"
+                placeholder="guardian email"
+                required
+              />
             </div>
-            <div>
-              <input
-                type="checkbox"
-                name="disability"
-                value="Written Expression Disorder"
-                id="disbilityCheckBox-Written"
-                onChange={handleDisabilityChange}
-              />
-              <label htmlFor="disbilityCheckBox-Written">
-                Written Expression Disorder
+            <div className="form_input_hr">
+              <label htmlFor="">
+                Nature of Student's Physical/Medical/Psychological Condition
               </label>
+              <div>
+                <input
+                  type="checkbox"
+                  name="disability"
+                  value="Attention-Deficit/Hyperactivity Disorder (AD/HD)"
+                  id="disbilityCheckBox-Attention"
+                  onChange={handleDisabilityChange}
+                />
+                <label htmlFor="disbilityCheckBox-Attention">
+                  Attention-Deficit/Hyperactivity Disorder (AD/HD)
+                </label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="disability"
+                  value="Anxiety Disorders"
+                  id="disbilityCheckBox-Anxiety"
+                  onChange={handleDisabilityChange}
+                />
+                <label htmlFor="disbilityCheckBox-Anxiety">
+                  Anxiety Disorders
+                </label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="disability"
+                  value="Autism Spectrum Disorder"
+                  id="disbilityCheckBox-Autism"
+                  onChange={handleDisabilityChange}
+                />
+                <label htmlFor="disbilityCheckBox-Autism">
+                  Autism Spectrum Disorder
+                </label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="disability"
+                  value="Blind/Low Vision"
+                  id="disbilityCheckBox-Blind"
+                  onChange={handleDisabilityChange}
+                />
+                <label htmlFor="disbilityCheckBox-Blind">
+                  Blind/Low Vision
+                </label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="disability"
+                  value="Deaf and Hearing Impairments"
+                  id="disbilityCheckBox-Deaf"
+                  onChange={handleDisabilityChange}
+                />
+                <label htmlFor="disbilityCheckBox-Deaf">
+                  Deaf and Hearing Impairments
+                </label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="disability"
+                  value="Reading Disorder"
+                  id="disbilityCheckBox-Reading"
+                  onChange={handleDisabilityChange}
+                />
+                <label htmlFor="disbilityCheckBox-Reading">
+                  Reading Disorder
+                </label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="disability"
+                  value="Mathematics Disorder"
+                  id="disbilityCheckBox-Mathematics"
+                  onChange={handleDisabilityChange}
+                />
+                <label htmlFor="disbilityCheckBox-Mathematics">
+                  Mathematics Disorder
+                </label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="disability"
+                  value="Written Expression Disorder"
+                  id="disbilityCheckBox-Written"
+                  onChange={handleDisabilityChange}
+                />
+                <label htmlFor="disbilityCheckBox-Written">
+                  Written Expression Disorder
+                </label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="disability"
+                  value="Communication Disorder"
+                  id="disbilityCheckBox-Communication"
+                  onChange={handleDisabilityChange}
+                />
+                <label htmlFor="disbilityCheckBox-Communication">
+                  Communication Disorder
+                </label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="disability"
+                  value="Medical & Chronic Health Related Impairments"
+                  id="disbilityCheckBox-Medical"
+                  onChange={handleDisabilityChange}
+                />
+                <label htmlFor="disbilityCheckBox-Medical">
+                  Medical & Chronic Health Related Impairments
+                </label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="disability"
+                  value="Mobility Impairments"
+                  id="disbilityCheckBox-Mobility"
+                  onChange={handleDisabilityChange}
+                />
+                <label htmlFor="disbilityCheckBox-Mobility">
+                  Mobility Impairments
+                </label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="disability"
+                  value="Pervasive Developmental Disorder"
+                  id="disbilityCheckBox-Pervasive"
+                  onChange={handleDisabilityChange}
+                />
+                <label htmlFor="disbilityCheckBox-Pervasive">
+                  Pervasive Developmental Disorder
+                </label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="disability"
+                  value="Traumatic Brain Injury"
+                  id="disbilityCheckBox-Traumatic"
+                  onChange={handleDisabilityChange}
+                />
+                <label htmlFor="disbilityCheckBox-Traumatic">
+                  Traumatic Brain Injury
+                </label>
+              </div>
             </div>
-            <div>
-              <input
-                type="checkbox"
-                name="disability"
-                value="Communication Disorder"
-                id="disbilityCheckBox-Communication"
-                onChange={handleDisabilityChange}
-              />
-              <label htmlFor="disbilityCheckBox-Communication">
-                Communication Disorder
+            <div className="form_input_hr">
+              <label htmlFor="other">
+                If any 'other' apart from those listed above, please specify
+                (else please write Not Applicable/NA)
               </label>
+              <textarea
+                ref={otherRef}
+                name="other"
+                rows={4}
+                cols={40}
+                id="other"
+              />
             </div>
-            <div>
-              <input
-                type="checkbox"
-                name="disability"
-                value="Medical & Chronic Health Related Impairments"
-                id="disbilityCheckBox-Medical"
-                onChange={handleDisabilityChange}
-              />
-              <label htmlFor="disbilityCheckBox-Medical">
-                Medical & Chronic Health Related Impairments
+            <div className="form_input_hr">
+              <label htmlFor="other-details">
+                For how long have you been experiencing the aforementioned
+                condition? / When was the issue first diagnosed?
               </label>
+              <textarea
+                ref={otherDetailsRef}
+                name="other-details"
+                rows={4}
+                cols={40}
+                id="other-details"
+              />
             </div>
-            <div>
-              <input
-                type="checkbox"
-                name="disability"
-                value="Mobility Impairments"
-                id="disbilityCheckBox-Mobility"
-                onChange={handleDisabilityChange}
-              />
-              <label htmlFor="disbilityCheckBox-Mobility">
-                Mobility Impairments
+            <div className="form_input_hr">
+              <label htmlFor="mandatory">
+                [MANDATORY INFORMATION] Please provide the following
+                information: 1) COURSES opted for this semester 2) Whether
+                CORE/ELECTIVE. 3) Name(s) of respective COURSE INSTRUCTORS in
+                the following format: 1) Qualitative Research Methods -
+                CORE/ELECTIVE - Prof. XYZ 2) ..... *
               </label>
+              <textarea
+                ref={mandatoryRef}
+                name="mandatory"
+                id="mandatory"
+                rows={4}
+                cols={40}
+              />
             </div>
-            <div>
-              <input
-                type="checkbox"
-                name="disability"
-                value="Pervasive Developmental Disorder"
-                id="disbilityCheckBox-Pervasive"
-                onChange={handleDisabilityChange}
-              />
-              <label htmlFor="disbilityCheckBox-Pervasive">
-                Pervasive Developmental Disorder
+            <div className="form_input_hr">
+              <label htmlFor="cross-school">
+                Cross Registered School Name & Course details, if any (Doubt)
               </label>
+              <input
+                type="text"
+                id="cross-school"
+                ref={crossSchoolRef}
+                className="form_text_input"
+                placeholder=""
+                required
+              />
             </div>
-            <div>
-              <input
-                type="checkbox"
-                name="disability"
-                value="Traumatic Brain Injury"
-                id="disbilityCheckBox-Traumatic"
-                onChange={handleDisabilityChange}
-              />
-              <label htmlFor="disbilityCheckBox-Traumatic">
-                Traumatic Brain Injury
-              </label>
+            <div className="form_input_hr">
+              <p>DECLARATION & AGREEMENT (PLEASE CLICK BELOW AFTER READING)</p>
+              <div>
+                <input
+                  type="radio"
+                  name="agree"
+                  id="agree"
+                  onChange={onAgree}
+                />
+                <label htmlFor="agree">I agree with the above</label>
+              </div>
             </div>
           </div>
-          <div className="form_input_hr">
-            <label htmlFor="other">
-              If any 'other' apart from those listed above, please specify (else
-              please write Not Applicable/NA)
-            </label>
-            <textarea
-              ref={otherRef}
-              name="other"
-              rows={4}
-              cols={40}
-              id="other"
-            />
-          </div>
-          <div className="form_input_hr">
-            <label htmlFor="other-details">
-              For how long have you been experiencing the aforementioned
-              condition? / When was the issue first diagnosed?
-            </label>
-            <textarea
-              ref={otherDetailsRef}
-              name="other-details"
-              rows={4}
-              cols={40}
-              id="other-details"
-            />
-          </div>
-          <div className="form_input_hr">
-            <label htmlFor="mandatory">
-              [MANDATORY INFORMATION] Please provide the following information:
-              1) COURSES opted for this semester 2) Whether CORE/ELECTIVE. 3)
-              Name(s) of respective COURSE INSTRUCTORS in the following format:
-              1) Qualitative Research Methods - CORE/ELECTIVE - Prof. XYZ 2)
-              ..... *
-            </label>
-            <textarea
-              ref={mandatoryRef}
-              name="mandatory"
-              id="mandatory"
-              rows={4}
-              cols={40}
-            />
-          </div>
-          <div className="form_input_hr">
-            <label htmlFor="cross-school">
-              Cross Registered School Name & Course details, if any (Doubt)
-            </label>
-            <input
-              type="text"
-              id="cross-school"
-              ref={crossSchoolRef}
-              className="form_text_input"
-              placeholder=""
-              required
-            />
-          </div>
-          <div className="form_input_hr">
-            <p>DECLARATION & AGREEMENT (PLEASE CLICK BELOW AFTER READING)</p>
-            <div>
-              <input type="radio" name="agree" id="agree" onChange={onAgree} />
-              <label htmlFor="agree">I agree with the above</label>
-            </div>
-          </div>
-        </div>
-        <button type="submit">Save</button>
-      </form>
+          <button type="submit">Save</button>
+        </form>
+      </div>
     </section>
   );
 };

@@ -76,6 +76,7 @@ function CalendarApp({
               selectedEvent={selectedEvent}
               mcName={mcName}
               mcEmail={mcEmail}
+              userId={userId}
             />
           )}
         </>
