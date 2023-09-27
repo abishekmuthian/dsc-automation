@@ -83,7 +83,7 @@ function CalendarApp({
       </div>
       <div className="mobile-warning hidden-desktop">
         <h2>
-          Calendar sample app is currently designed for a desktop experience.
+          Disability Support Committee Automation app is currently designed for a desktop experience.
         </h2>
         <p>
           Visit Nylas dashboard for more use-cases: https://dashboard.nylas.com

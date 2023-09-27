@@ -39,7 +39,7 @@ const Layout = ({
   return (
     <div className="layout">
       <div className="title-menu">
-        <h1>Calendar sample app</h1>
+        <h1>Disability Support Committee Automation</h1>
         {showAdminLogin && (
           <div className="menu">
             <button onClick={() => handleShowStudentForm(false)}>

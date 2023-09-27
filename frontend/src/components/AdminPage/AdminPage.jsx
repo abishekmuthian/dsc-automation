@@ -143,7 +143,7 @@ const AdminPage = ({
     >
       <div>
         <h2>
-          Settings Page{" "}
+          Settings{" "}
           <button onClick={() => onDeleteAdmin(admin)}>Delete</button>
         </h2>
         <p>Medical Counselor Name: {admin.medicalCounselorName}</p>
