@@ -240,12 +240,12 @@ section.login {
 
 @media #{$desktop} {
   .app-card {
-    // background: linear-gradient($color-grey-400, $color-grey-400) no-repeat
-    //   calc(100% - #{$spacing-12}) / 1px 100%;
-    // background-color: $color-white;
     background: linear-gradient($color-grey-400, $color-grey-400) no-repeat
-      calc(110% - #{$spacing-12}) / 1px 100%;
+      calc(50% - #{$spacing-12}) / 1px 100%;
     background-color: $color-white;
+    // background: linear-gradient($color-grey-400, $color-grey-400) no-repeat
+    //   calc(110% - #{$spacing-12}) / 1px 100%;
+    // background-color: $color-white;
   }
 
   .layout {
