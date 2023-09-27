@@ -4,6 +4,8 @@ import axios from "axios";
 import CalendarApp from "../../CalendarApp";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import downloadIcon from "../icons/file-down.png";
+import scheduleIcon from "../icons/calendar.png";
 
 const AdminPage = ({
   admin,
@@ -136,79 +138,102 @@ const AdminPage = ({
       className="app-card"
       style={{
         display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
+        flexDirection: "row",
+        // alignItems: "center",
+        justifyContent: "space-between",
+        // border: "1px solid red",
+        margin: "0px",
+        gap: "1px",
       }}
     >
-      <div>
-        <h2>
-          Settings Page{" "}
-          <button onClick={() => onDeleteAdmin(admin)}>Delete</button>
-        </h2>
-        <p>Medical Counselor Name: {admin.medicalCounselorName}</p>
-        <p>Medical Councelor Email: {admin.medicalCounselorEmail}</p>
-      </div>
-
       <div
-        className="enable_student"
-        style={{ display: "flex", gap: "20px", alignItems: "center" }}
+        style={{
+          // border: "1px solid green",
+          display: "flex",
+          flexDirection: "column",
+          width: "50%",
+        }}
       >
-        <p>Enable Student Form</p>
-        <Switch
-          onChange={handleChange}
-          checked={admin.studentFormToggle ? true : checked}
-          className="react-switch"
-          onColor="#4169e1"
-        />
-      </div>
-      <br />
-      {studentInputs.length > 0 ? (
-        <button onClick={() => setShowData(!showData)}>
-          {showData ? "Hide" : "Show"} Student Input
-        </button>
-      ) : null}
-
-      {/* {showData && (
-        <ul>
-          {studentInputs.map((input, index) => (
-            <li key={index}>{input.name}</li>
-          ))}
-        </ul>
-      )} */}
-
-      {showData && (
         <div>
-          <table className="table_all">
-            <thead>
-              <tr className="table_header">
-                <td>Student Id</td>
-                <td>Student Name</td>
-                <td>Schedule</td>
-                <td>Download</td>
-              </tr>
-            </thead>
-            <tbody>
-              {studentInputs.map((input, index) => (
-                <tr key={index}>
-                  <td>{input.studentId}</td>
-                  <td>{input.name}</td>
-                  <td>
-                    <button onClick={() => handleEventCreator(input)}>
-                      Schedule
-                    </button>
-                  </td>
-                  <td>
-                    <button onClick={() => handleDownload(input)}>
-                      Download
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <h2>
+            Settings Page{" "}
+            <button onClick={() => onDeleteAdmin(admin)}>Delete</button>
+          </h2>
+          <p>Medical Counselor Name: {admin.medicalCounselorName}</p>
+          <p>Medical Councelor Email: {admin.medicalCounselorEmail}</p>
         </div>
-      )}
+
+        <div
+          className="enable_student"
+          style={{ display: "flex", gap: "20px", alignItems: "center" }}
+        >
+          <p>Enable Student Form</p>
+          <Switch
+            onChange={handleChange}
+            checked={admin.studentFormToggle ? true : checked}
+            className="react-switch"
+            onColor="#4169e1"
+          />
+        </div>
+        <br />
+      </div>
+      <div style={{ width: "50%" }}>
+        {/* {studentInputs.length > 0 ? (
+          <button onClick={() => setShowData(!showData)}>
+            {showData ? "Hide" : "Show"} Student Input
+          </button>
+        ) : null} */}
+
+        {/* {showData && ( */}
+        <h2>Enrolled Students</h2>
+        {studentInputs.length > 0 ? (
+          <div>
+            <table className="table_all" style={{ overflow: "scroll" }}>
+              <thead>
+                <tr className="table_header">
+                  <td style={{ width: "10%" }}>Id</td>
+                  <td style={{ width: "30%" }}>Name</td>
+                  <td style={{ width: "20%" }}>Schedule</td>
+                  <td style={{ width: "20%" }}>Report</td>
+                </tr>
+              </thead>
+              <tbody>
+                {studentInputs.map((input, index) => (
+                  <tr key={index}>
+                    <td>{input.studentId}</td>
+                    <td>{input.name}</td>
+                    <td>
+                      <img
+                        src={scheduleIcon}
+                        alt="Schedule"
+                        style={{ width: "30%" }}
+                        onClick={() => handleEventCreator(input)}
+                      />
+                      {/* <button onClick={() => handleEventCreator(input)}>
+                        Schedule
+                      </button> */}
+                    </td>
+                    <td>
+                      <img
+                        src={downloadIcon}
+                        alt="Download Report"
+                        style={{ width: "30%" }}
+                        onClick={() => handleDownload(input)}
+                      />
+                      {/* <button
+                        onClick={() => handleDownload(input)}
+                        style={{ width: "40%" }}
+                      ></button> */}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <h2>None</h2>
+        )}
+      </div>
     </div>
   );
 };
