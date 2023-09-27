@@ -22,6 +22,8 @@ import {
 function EventDetail({ selectedEvent, mcName, mcEmail }) {
   const [showTopScrollShadow, setShowTopScrollShadow] = useState(false);
   const [showBottomScrollShadow, setShowBottomScrollShadow] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
     initializeScrollShadow(".description-container", setShowBottomScrollShadow);
@@ -45,11 +47,31 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
     };
   }, []);
 
+  useEffect(() => {
+    const userIdString = sessionStorage.getItem("userId");
+    const userEmail = sessionStorage.getItem("userEmail");
+    if (userIdString) {
+      setUserId(userIdString);
+    }
+    if (userEmail) {
+      setUserEmail(userEmail);
+    }
+    if (userIdString) {
+      setUserId(userIdString);
+    }
+  }, []);
+
   const handleNotify = (event) => {
     let participants = [];
     for (let i = 0; i < event.participants.length; i++) {
       participants.push(event.participants[i]["email"]);
     }
+
+    // console.log("Organizers: ", getOrganizerString(event));
+
+    console.log("User ID: ", userId);
+    console.log("User Email: ", userEmail);
+    
 
     // let mcEmail = event.participants[0]["email"];
     // let studentEmail = event.participants[1]["email"];
@@ -66,7 +88,12 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
           studentEmail,
           studentName,
         },
-      })
+      },
+      {
+      headers: {
+        Authorization: userId,
+        "Content-Type": "application/json",
+      },},)
       .then((response) => {
         console.log("res notify: ", response.data);
       });
@@ -198,7 +225,7 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
               }}
             ></p>
             <button onClick={() => handleNotify(selectedEvent)}>
-              Notify Participants
+              Notify Counselor
             </button>
             <div
               className={`scroll-shadow bottom${

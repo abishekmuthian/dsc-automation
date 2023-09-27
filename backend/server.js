@@ -72,7 +72,7 @@ app.post("/nylas/generate-auth-url", express.json(), async (req, res) => {
   const authUrl = Nylas.urlForAuthentication({
     loginHint: body.email_address,
     redirectURI: (CLIENT_URI || "") + body.success_url,
-    scopes: [Scope.Calendar],
+    scopes: [Scope.Calendar, Scope.Email],
   });
 
   return res.send(authUrl);
@@ -235,36 +235,9 @@ app.post("/nylas/create-events", isAuthenticated, express.json(), (req, res) =>
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-// get stored user data from sqlite db using prims
-app.post("/send/email-notification", async (req, res) => {
-  const { participants } = req.body;
-  console.log("backend - participants : ", participants);
-
-  // Find the student's disability
-
-  student = await prisma.studentForm.findUnique({
-    where: {
-      // id: parseInt(user.id),
-      email: participants.studentEmail,
-    },
-  });
-
-  console.log("Student data: ", student);
-
-  studentDisabilities =  student.disability.split(",");
-
-  emailBody = student.name + " is living with "+studentDisabilities.toString()+".";
-  emailBody = emailBody + "<br>"; 
-
-  emailBody = emailBody + studentDisabilities.forEach(function(value, item, index){
-   getInclusivePedagogy(value, item, index, emailBody);
-  });
-
-  console.log("emailBody: ", emailBody);
-    
-  res.json({
-    message: "success",
-  });
+// send email notification to the medical counselor
+app.post("/send/email-notification", isAuthenticated, (req, res) => {
+  route.emailNotification(req, res, prisma, openai);
 });
 
 app.get("/get/admin-data", async (req, res) => {
@@ -364,9 +337,11 @@ app.post("/add/student-input", async (req, res) => {
   });
   console.log("admin created");
 
-  console.log("Checking for free busy time");
-  const user = await prisma.user.findMany();
-  route.freeBusy(req, res, user[0]);
+  // To find the free busy time
+  // console.log("Checking for free busy time");
+  // const user = await prisma.user.findMany();
+  // route.freeBusy(req, res, user[0]);
+
   res.json(admin);
 });
 
@@ -375,67 +350,6 @@ app.get("/get/student-input", async (req, res) => {
   console.log("fetched student input data: ", studentInputs);
   res.json(studentInputs);
 });
-
-// Fetch the inclusive pedagogy from open AI for the disease mentioned by the student in the form
-async function getInclusivePedagogy(disability, index, array, emailBody) {
-  if (disability.trim().length === 0) {
-    res.status(400).json({
-      error: {
-        message: "Please enter a valid disability",
-      },
-    });
-    return;
-  }
-
-  try {
-    const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {"role": "system", "content": "You are a helpful assistant advising inclusive pedagogy for different disabilities."},
-        {"role": "user", "content": disability}
-      ],
-      temperature: 0.6,
-      max_tokens: 600,
-    });
-
-    inclusivePedagogy = completion.choices[0].message.content;
-
-    // console.log("Inclusive pedagogy: ", inclusivePedagogy);
-    emailBody =  emailBody + inclusivePedagogy;
-    emailBody = emailBody + "<br>";
-
-    console.log("Inclusive pedagogy: ", emailBody);
-    
-  } catch (error) {
-    // Consider adjusting the error handling logic for your use case
-    if (error.response) {
-      console.error(error.response.status, error.response.data);
-      res.status(error.response.status).json(error.response.data);
-    } else {
-      console.error(`Error with OpenAI API request: ${error.message}`);
-      res.status(500).json({
-        error: {
-          message: "An error occurred during your request.",
-        },
-      });
-    }
-  }
-}
-
-// Send the email to the medical counselor and the student
-async function sendEmail(subject, recipients, body) {
-  try {
-    const message = await Nylas.messages.send({
-      subject: "Hello from Nylas",
-      to: [{ name: "Recipient Name", email: "recipient@example.com" }],
-      body: "This is the email content.",
-    });
-
-    console.log("Email sent successfully");
-  } catch (error) {
-    console.error("Error sending email:", error);
-  }
-}
 
 // Start listening on port 9000
 app.listen(port, () => console.log("App listening on port " + port));

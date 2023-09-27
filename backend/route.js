@@ -1,5 +1,9 @@
 const { default: Event } = require("nylas/lib/models/event");
 const Nylas = require("nylas");
+const {
+  default: EmailParticipant,
+} = require("nylas/lib/models/email-participant");
+const { default: Draft } = require("nylas/lib/models/draft");
 
 exports.readEvents = async (req, res) => {
   const user = res.locals.user;
@@ -46,6 +50,73 @@ exports.freeBusy = async (req, res, user) => {
   console.log("Calendar free time: ", freeBusy);
 };
 
+exports.emailNotification = async (req, res, prisma, openai) => {
+  const user = res.locals.user;
+
+  const nylas = Nylas.with(user.accessToken);
+
+  const { participants } = req.body;
+  console.log("backend - participants : ", participants);
+
+  // Find the student's disability
+
+  student = await prisma.studentForm.findUnique({
+    where: {
+      // id: parseInt(user.id),
+      email: participants.studentEmail,
+    },
+  });
+
+  console.log("Student data: ", student);
+
+  studentDisabilities = student.disability.split(",");
+
+  emailBody =
+    "<h3>" +
+    student.name +
+    " is living with " +
+    studentDisabilities.toString() +
+    "." +
+    "</h3>";
+  emailBody = emailBody + "<br>" + "<br>";
+
+  inclusivePedagogyResults = [];
+
+  // inclusivePedagogy =   studentDisabilities.forEach(async function(value, item, index){
+  //  await getInclusivePedagogy(value, item, index, inclusivePedagogy, openai);
+  // });
+
+  await Promise.all(
+    studentDisabilities.map(async (disability) => {
+      inclusivePedagogy = await getInclusivePedagogy(
+        disability,
+        inclusivePedagogyResults,
+        openai
+      );
+    })
+  );
+
+  // console.log(
+  //   "Inclusive Pedagogy results",
+  //   inclusivePedagogyResults.toString()
+  // );
+
+  emailBody = emailBody + inclusivePedagogyResults.join("<br><br>");
+
+  console.log("emailBody: ", emailBody);
+
+  sendEmail(
+    "Inclusive pedagogy for " + participants.studentName,
+    { name: participants.mcName, email: participants.mcEmail },
+    emailBody,
+    nylas
+  );
+
+  res.json({
+    message: "success",
+  });
+};
+
 exports.createEvents = async (req, res) => {
   const user = res.locals.user;
 
@@ -79,3 +150,79 @@ exports.createEvents = async (req, res) => {
 
   return res.json(event);
 };
+
+// Fetch the inclusive pedagogy from open AI for the disease mentioned by the student in the form
+async function getInclusivePedagogy(
+  disability,
+  inclusivePedagogyResults,
+  openai
+) {
+  if (disability.trim().length === 0) {
+    res.status(400).json({
+      error: {
+        message: "Please enter a valid disability",
+      },
+    });
+    return;
+  }
+
+  try {
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are a helpful assistant advising inclusive pedagogy for different disabilities.",
+        },
+        { role: "user", content: disability },
+      ],
+      temperature: 0.6,
+      max_tokens: 600,
+    });
+
+    suggestion = completion.choices[0].message.content;
+
+    // console.log("Inclusive pedagogy: ", inclusivePedagogy);
+    inclusivePedagogyResults.push(insertBrBeforeNumbering(suggestion));
+
+    // console.log("Inclusive pedagogy: ", inclusivePedagogyResults.toString());
+  } catch (error) {
+    // Consider adjusting the error handling logic for your use case
+    if (error.response) {
+      console.error(error.response.status, error.response.data);
+      res.status(error.response.status).json(error.response.data);
+    } else {
+      console.error(`Error with OpenAI API request: ${error.message}`);
+      res.status(500).json({
+        error: {
+          message: "An error occurred during your request.",
+        },
+      });
+    }
+  }
+}
+
+// Send the email to the medical counselor and the student
+async function sendEmail(subject, recipient, body, nylas) {
+  try {
+    // Create a new draft object
+    const draft = new Draft(nylas, {
+      to: [{ name: recipient.name, email: recipient.email }],
+      subject: subject,
+      body: body,
+    });
+    // Save the draft to send it to Nylas
+    draft.save();
+
+    draft.send();
+
+    console.log("Email sent successfully");
+  } catch (error) {
+    console.error("Error sending email:", error);
+  }
+}
+
+function insertBrBeforeNumbering(text) {
+  return text.replace(/(\d+\.)/g, "<br>$1");
+}
