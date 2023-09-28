@@ -1,124 +1,170 @@
-@import './base.scss';
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Source+Sans+Pro&display=swap');
+@import "./base.scss";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Source+Sans+Pro&display=swap");
 
 .create-student-form-view {
-    flex: 1 0;
-    min-width: 0;
+  flex: 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 55vh;
+  background-color: $color-white;
+  border-radius: 50px;
+  justify-content: center;
+  align-items: center;
+
+  .disability-check {
     display: flex;
     flex-direction: column;
-  
-    .header {
+  }
+
+  label {
+    color: $color-blue-700;
+  }
+
+  h2 {
+    color: $color-blue-700;
+  }
+  .course-type {
+    display: flex;
+    flex-direction: column;
+  }
+  .radio-type {
+    display: flex;
+    flex-direction: row;
+
+    padding: 10px;
+
+    align-items: center;
+    gap: 20px;
+    // justify-content: space-around;
+  }
+  .disability-checkbox {
+    display: flex;
+    flex-direction: row;
+
+    // padding: 10px;
+
+    align-items: center;
+    gap: 20px;
+  }
+
+  p {
+    color: $color-blue-700;
+  }
+  .header {
+    display: flex;
+    padding: calc(#{$spacing-4} / 2) 0 $spacing-12;
+    justify-content: space-between;
+    border-bottom: 1px solid $color-grey-400;
+
+    .title {
+      @include font-style("Heading L");
+    }
+    .button-container {
       display: flex;
-      padding: calc(#{$spacing-4} / 2) 0 $spacing-12;
-      justify-content: space-between;
-      border-bottom: 1px solid $color-grey-400;
-  
-      .title {
-        @include font-style('Heading L');
-      }
-      .button-container {
-        display: flex;
-        gap: $spacing-12;
-  
-        button {
-          @include font-style('Link M');
-          &.blue {
-            background-color: $color-blue-500;
-            color: $color-white;
-  
-            &:hover,
-            &:focus {
-              background-color: $color-blue-700;
-            }
-  
-            &:active {
-              background-color: $color-blue-900;
-            }
+      gap: $spacing-12;
+
+      button {
+        @include font-style("Link M");
+        &.blue {
+          background-color: $color-blue-500;
+          color: $color-white;
+
+          &:hover,
+          &:focus {
+            background-color: $color-blue-700;
           }
-  
-          &.outline {
-            background-color: transparent;
-            color: $color-grey-800;
-            outline: 1px solid $color-grey-400;
-  
-            &:hover,
-            &:focus {
-              outline: 1px solid $color-blue-900;
-            }
-  
-            &:active {
-              outline: 2px solid $color-blue-900;
-            }
+
+          &:active {
+            background-color: $color-blue-900;
           }
         }
-      }
-    }
-  
-    form {
-      flex: 1;
-      padding-top: $spacing-24;
-      width: calc(100% + #{$spacing-16});
-      display: flex;
-      flex-flow: column;
-      gap: $spacing-24;
-      overflow-y: scroll;
-      overflow-x: hidden;
-  
-      &::-webkit-scrollbar-track {
-        margin-top: $spacing-32;
-      }
-  
-      .row {
-        display: flex;
-        justify-content: space-between;
-        gap: calc(#{$spacing-48} + #{$spacing-8});
-  
-        .field-container {
-          flex: 1;
-          label {
-            @include font-style('Body S');
+
+        &.outline {
+          background-color: transparent;
+          color: $color-grey-800;
+          outline: 1px solid $color-grey-400;
+
+          &:hover,
+          &:focus {
+            outline: 1px solid $color-blue-900;
           }
-          input {
-            width: 100%;
-            outline: none;
-            border: 1px solid $color-grey-400;
-            color: $color-grey-900;
-            border-radius: 16px;
-            padding: $spacing-8 $spacing-16;
-            font-size: $fs-16;
-            font-weight: 400;
-            line-height: 1.5;
-          }
-  
-          textarea {
-            width: 100%;
-            outline: none;
-            border: 1px solid $color-grey-400;
-            color: $color-grey-900;
-            border-radius: 16px;
-            padding: $spacing-8 $spacing-16;
-            font-size: $fs-16;
-            font-weight: 400;
-            line-height: 1.5;
-            resize: vertical;
-  
-            &::placeholder {
-              color: $color-grey-700;
-            }
-          }
-  
-          input[type='datetime-local']::-webkit-calendar-picker-indicator {
-            color: rgba(0, 0, 0, 0);
-            opacity: 1;
-            display: block;
-            background: url('../components/icons/date-input-icon.svg') no-repeat;
-          }
-  
-          .note {
-            @include font-style('Body S');
-            color: $color-grey-700;
+
+          &:active {
+            outline: 2px solid $color-blue-900;
           }
         }
       }
     }
   }
+
+  form {
+    flex: 1;
+    padding-top: $spacing-24;
+    width: calc(100% + #{$spacing-16});
+    display: flex;
+    flex-flow: column;
+    gap: $spacing-24;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 70%;
+    padding-bottom: 10px;
+
+    &::-webkit-scrollbar-track {
+      margin-top: $spacing-32;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: calc(#{$spacing-48} + #{$spacing-8});
+
+      .field-container {
+        flex: 1;
+        label {
+          @include font-style("Body S");
+        }
+        input {
+          width: 100%;
+          outline: none;
+          border: 1px solid $color-grey-400;
+          color: $color-grey-900;
+          border-radius: 16px;
+          padding: $spacing-8 $spacing-16;
+          font-size: $fs-16;
+          font-weight: 400;
+          line-height: 1.5;
+        }
+
+        textarea {
+          width: 100%;
+          outline: none;
+          border: 1px solid $color-grey-400;
+          color: $color-grey-900;
+          border-radius: 16px;
+          padding: $spacing-8 $spacing-16;
+          font-size: $fs-16;
+          font-weight: 400;
+          line-height: 1.5;
+          resize: vertical;
+
+          &::placeholder {
+            color: $color-grey-700;
+          }
+        }
+
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+          color: rgba(0, 0, 0, 0);
+          opacity: 1;
+          display: block;
+          background: url("../components/icons/date-input-icon.svg") no-repeat;
+        }
+
+        .note {
+          @include font-style("Body S");
+          color: $color-grey-700;
+        }
+      }
+    }
+  }
+}

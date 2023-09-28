@@ -7,7 +7,6 @@ import StudentDetailSaved from "./StudentDetailSaved";
 import "../../styles/student.scss";
 
 const StudentForm = ({}) => {
-  // console.log("student form invoked");
   const studentIdRef = useRef(null);
   const emailRef = useRef(null);
   const nameRef = useRef(null);
@@ -224,26 +223,36 @@ const StudentForm = ({}) => {
           </div>
         </div>
         <div className="row">
-          <div className="field-container">
+          <div className="course-type">
             <p>Select Course Type</p>
-            <input
-              type="radio"
-              value="Full-Time"
-              id="course-fulltime"
-              name="courseType"
-              checked={courseType === "Full-Time"}
-              onChange={onCourseTypeChange}
-            />
-            <label htmlFor="course-fulltime">Full Time</label>
-            <input
-              type="radio"
-              value="Part-Time"
-              name="courseType"
-              id="course-parttime"
-              checked={courseType === "Part-Time"}
-              onChange={onCourseTypeChange}
-            />
-            <label htmlFor="course-parttime">Part Time</label>
+            <div className="radio-type">
+              <input
+                className="radio-button"
+                type="radio"
+                value="Full-Time"
+                id="course-fulltime"
+                name="courseType"
+                checked={courseType === "Full-Time"}
+                onChange={onCourseTypeChange}
+              />
+              <label className="radio-desc" htmlFor="course-fulltime">
+                Full Time
+              </label>
+            </div>
+            <div className="radio-type">
+              <input
+                className="radio-button"
+                type="radio"
+                value="Part-Time"
+                name="courseType"
+                id="course-parttime"
+                checked={courseType === "Part-Time"}
+                onChange={onCourseTypeChange}
+              />
+              <label className="radio-desc" htmlFor="course-parttime">
+                Part Time
+              </label>
+            </div>
           </div>
         </div>
         <div className="row">
@@ -330,146 +339,170 @@ const StudentForm = ({}) => {
           </div>
         </div>
 
-        <div className="row">
+        <div className="disability-check">
           <label htmlFor="">
             Nature of Student's Physical/Medical/Psychological Condition
           </label>
           <div className="field-container">
-            <input
-              type="checkbox"
-              name="disability"
-              value="Attention-Deficit/Hyperactivity Disorder (AD/HD)"
-              id="disbilityCheckBox-Attention"
-              onChange={handleDisabilityChange}
-            />
-            <label htmlFor="disbilityCheckBox-Attention">
-              Attention-Deficit/Hyperactivity Disorder (AD/HD)
-            </label>
-            <input
-              type="checkbox"
-              name="disability"
-              value="Anxiety Disorders"
-              id="disbilityCheckBox-Anxiety"
-              onChange={handleDisabilityChange}
-            />
-            <label htmlFor="disbilityCheckBox-Anxiety">Anxiety Disorders</label>
-
-            <input
-              type="checkbox"
-              name="disability"
-              value="Autism Spectrum Disorder"
-              id="disbilityCheckBox-Autism"
-              onChange={handleDisabilityChange}
-            />
-            <label htmlFor="disbilityCheckBox-Autism">
-              Autism Spectrum Disorder
-            </label>
-
-            <input
-              type="checkbox"
-              name="disability"
-              value="Blind/Low Vision"
-              id="disbilityCheckBox-Blind"
-              onChange={handleDisabilityChange}
-            />
-            <label htmlFor="disbilityCheckBox-Blind">Blind/Low Vision</label>
-
-            <input
-              type="checkbox"
-              name="disability"
-              value="Deaf and Hearing Impairments"
-              id="disbilityCheckBox-Deaf"
-              onChange={handleDisabilityChange}
-            />
-            <label htmlFor="disbilityCheckBox-Deaf">
-              Deaf and Hearing Impairments
-            </label>
-
-            <input
-              type="checkbox"
-              name="disability"
-              value="Reading Disorder"
-              id="disbilityCheckBox-Reading"
-              onChange={handleDisabilityChange}
-            />
-            <label htmlFor="disbilityCheckBox-Reading">Reading Disorder</label>
-
-            <input
-              type="checkbox"
-              name="disability"
-              value="Mathematics Disorder"
-              id="disbilityCheckBox-Mathematics"
-              onChange={handleDisabilityChange}
-            />
-            <label htmlFor="disbilityCheckBox-Mathematics">
-              Mathematics Disorder
-            </label>
-
-            <input
-              type="checkbox"
-              name="disability"
-              value="Written Expression Disorder"
-              id="disbilityCheckBox-Written"
-              onChange={handleDisabilityChange}
-            />
-            <label htmlFor="disbilityCheckBox-Written">
-              Written Expression Disorder
-            </label>
-
-            <input
-              type="checkbox"
-              name="disability"
-              value="Communication Disorder"
-              id="disbilityCheckBox-Communication"
-              onChange={handleDisabilityChange}
-            />
-            <label htmlFor="disbilityCheckBox-Communication">
-              Communication Disorder
-            </label>
-
-            <input
-              type="checkbox"
-              name="disability"
-              value="Medical & Chronic Health Related Impairments"
-              id="disbilityCheckBox-Medical"
-              onChange={handleDisabilityChange}
-            />
-            <label htmlFor="disbilityCheckBox-Medical">
-              Medical & Chronic Health Related Impairments
-            </label>
-
-            <input
-              type="checkbox"
-              name="disability"
-              value="Mobility Impairments"
-              id="disbilityCheckBox-Mobility"
-              onChange={handleDisabilityChange}
-            />
-            <label htmlFor="disbilityCheckBox-Mobility">
-              Mobility Impairments
-            </label>
-
-            <input
-              type="checkbox"
-              name="disability"
-              value="Pervasive Developmental Disorder"
-              id="disbilityCheckBox-Pervasive"
-              onChange={handleDisabilityChange}
-            />
-            <label htmlFor="disbilityCheckBox-Pervasive">
-              Pervasive Developmental Disorder
-            </label>
-
-            <input
-              type="checkbox"
-              name="disability"
-              value="Traumatic Brain Injury"
-              id="disbilityCheckBox-Traumatic"
-              onChange={handleDisabilityChange}
-            />
-            <label htmlFor="disbilityCheckBox-Traumatic">
-              Traumatic Brain Injury
-            </label>
+            <div className="disability-checkbox">
+              <input
+                type="checkbox"
+                name="disability"
+                value="Attention-Deficit/Hyperactivity Disorder (AD/HD)"
+                id="disbilityCheckBox-Attention"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox-Attention">
+                Attention-Deficit/Hyperactivity Disorder (AD/HD)
+              </label>
+            </div>
+            <div className="disability-checkbox">
+              <input
+                type="checkbox"
+                name="disability"
+                value="Anxiety Disorders"
+                id="disbilityCheckBox-Anxiety"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox-Anxiety">
+                Anxiety Disorders
+              </label>
+            </div>
+            <div className="disability-checkbox">
+              {" "}
+              <input
+                type="checkbox"
+                name="disability"
+                value="Autism Spectrum Disorder"
+                id="disbilityCheckBox-Autism"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox-Autism">
+                Autism Spectrum Disorder
+              </label>
+            </div>
+            <div className="disability-checkbox">
+              <input
+                type="checkbox"
+                name="disability"
+                value="Blind/Low Vision"
+                id="disbilityCheckBox-Blind"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox-Blind">Blind/Low Vision</label>
+            </div>
+            <div className="disability-checkbox">
+              {" "}
+              <input
+                type="checkbox"
+                name="disability"
+                value="Deaf and Hearing Impairments"
+                id="disbilityCheckBox-Deaf"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox-Deaf">
+                Deaf and Hearing Impairments
+              </label>
+            </div>
+            <div className="disability-checkbox">
+              <input
+                type="checkbox"
+                name="disability"
+                value="Reading Disorder"
+                id="disbilityCheckBox-Reading"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox-Reading">
+                Reading Disorder
+              </label>
+            </div>
+            <div className="disability-checkbox">
+              {" "}
+              <input
+                type="checkbox"
+                name="disability"
+                value="Mathematics Disorder"
+                id="disbilityCheckBox-Mathematics"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox-Mathematics">
+                Mathematics Disorder
+              </label>
+            </div>
+            <div className="disability-checkbox">
+              <input
+                type="checkbox"
+                name="disability"
+                value="Written Expression Disorder"
+                id="disbilityCheckBox-Written"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox-Written">
+                Written Expression Disorder
+              </label>
+            </div>
+            <div className="disability-checkbox">
+              {" "}
+              <input
+                type="checkbox"
+                name="disability"
+                value="Communication Disorder"
+                id="disbilityCheckBox-Communication"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox-Communication">
+                Communication Disorder
+              </label>
+            </div>
+            <div className="disability-checkbox">
+              <input
+                type="checkbox"
+                name="disability"
+                value="Medical & Chronic Health Related Impairments"
+                id="disbilityCheckBox-Medical"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox-Medical">
+                Medical & Chronic Health Related Impairments
+              </label>
+            </div>
+            <div className="disability-checkbox">
+              {" "}
+              <input
+                type="checkbox"
+                name="disability"
+                value="Mobility Impairments"
+                id="disbilityCheckBox-Mobility"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox-Mobility">
+                Mobility Impairments
+              </label>
+            </div>
+            <div className="disability-checkbox">
+              <input
+                type="checkbox"
+                name="disability"
+                value="Pervasive Developmental Disorder"
+                id="disbilityCheckBox-Pervasive"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox-Pervasive">
+                Pervasive Developmental Disorder
+              </label>
+            </div>
+            <div className="disability-checkbox">
+              <input
+                type="checkbox"
+                name="disability"
+                value="Traumatic Brain Injury"
+                id="disbilityCheckBox-Traumatic"
+                onChange={handleDisabilityChange}
+              />
+              <label htmlFor="disbilityCheckBox-Traumatic">
+                Traumatic Brain Injury
+              </label>
+            </div>
           </div>
         </div>
 
@@ -542,11 +575,19 @@ const StudentForm = ({}) => {
         </div>
 
         <div className="row">
-          <div className="field-container">
+          <div className="course-type">
             <p>DECLARATION & AGREEMENT (PLEASE CLICK BELOW AFTER READING)</p>
-            <div>
-              <input type="radio" name="agree" id="agree" onChange={onAgree} />
-              <label htmlFor="agree">I agree with the above</label>
+            <div className="radio-type">
+              <input
+                className="radio-button"
+                type="radio"
+                name="agree"
+                id="agree"
+                onChange={onAgree}
+              />
+              <label className="radio-desc" htmlFor="agree">
+                I agree with the above
+              </label>
             </div>
           </div>
         </div>
