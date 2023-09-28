@@ -118,6 +118,12 @@
             @include font-style('Body S');
             color: $color-grey-700;
           }
+
+          input[type="radio"] {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
         }
       }
     }
