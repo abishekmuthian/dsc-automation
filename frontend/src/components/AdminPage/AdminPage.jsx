@@ -144,11 +144,11 @@ const AdminPage = ({
         // border: "1px solid red",
         margin: "0px",
         gap: "1px",
+        padding: "1px",
       }}
     >
       <div
         style={{
-          // border: "1px solid green",
           display: "flex",
           flexDirection: "column",
           width: "50%",
@@ -177,30 +177,46 @@ const AdminPage = ({
         </div>
         <br />
       </div>
-      <div style={{ width: "50%" }}>
-        {/* {studentInputs.length > 0 ? (
-          <button onClick={() => setShowData(!showData)}>
-            {showData ? "Hide" : "Show"} Student Input
-          </button>
-        ) : null} */}
-
-        {/* {showData && ( */}
+      <div style={{ width: "50%", padding: 0 }}>
         <h2>Enrolled Students</h2>
         {studentInputs.length > 0 ? (
-          <div>
-            <table className="table_all" style={{ overflow: "scroll" }}>
-              <thead>
+          <div style={{ height: "150px", overflowY: "scroll" }}>
+            <table
+              className="table_all"
+              style={{
+                borderCollapse: "collapse",
+                borderRadius: "5px",
+                background: "white",
+              }}
+            >
+              <thead
+                style={{
+                  position: "sticky",
+                  top: "0px",
+                  margin: "0 0 0 0",
+                  background: "white",
+                  fontWeight: "700",
+                  // border: "1px solid grey",
+                  // marginBottom: "1px",
+                }}
+              >
                 <tr className="table_header">
-                  <td style={{ width: "10%" }}>Id</td>
+                  <td style={{ width: "15%", paddingLeft: "2px" }}>Id</td>
                   <td style={{ width: "30%" }}>Name</td>
-                  <td style={{ width: "20%" }}>Schedule</td>
-                  <td style={{ width: "20%" }}>Report</td>
+                  <td style={{ width: "15%" }}>Schedule</td>
+                  <td style={{ width: "15%" }}>Report</td>
                 </tr>
               </thead>
               <tbody>
                 {studentInputs.map((input, index) => (
-                  <tr key={index}>
-                    <td>{input.studentId}</td>
+                  <tr key={index} style={{ borderBottom: "1px solid #EEEDED" }}>
+                    <td
+                      style={{
+                        paddingLeft: "3px",
+                      }}
+                    >
+                      {input.studentId}
+                    </td>
                     <td>{input.name}</td>
                     <td>
                       <img
@@ -209,21 +225,14 @@ const AdminPage = ({
                         style={{ width: "30%" }}
                         onClick={() => handleEventCreator(input)}
                       />
-                      {/* <button onClick={() => handleEventCreator(input)}>
-                        Schedule
-                      </button> */}
                     </td>
                     <td>
                       <img
                         src={downloadIcon}
                         alt="Download Report"
-                        style={{ width: "30%" }}
+                        style={{ width: "35%" }}
                         onClick={() => handleDownload(input)}
                       />
-                      {/* <button
-                        onClick={() => handleDownload(input)}
-                        style={{ width: "40%" }}
-                      ></button> */}
                     </td>
                   </tr>
                 ))}

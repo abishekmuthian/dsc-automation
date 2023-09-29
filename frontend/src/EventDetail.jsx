@@ -71,7 +71,7 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
 
     console.log("User ID: ", userId);
     console.log("User Email: ", userEmail);
-    
+
     console.log("organizer details: ", getOrganizerString(event));
     // let mcEmail = event.participants[0]["email"];
     // let studentEmail = event.participants[1]["email"];
@@ -80,20 +80,24 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
 
     const url = serverBaseUrl + "/send/email-notification";
     axios
-      .post(url, {
-        // participants: participants.join(","),
-        participants: {
-          mcEmail,
-          mcName,
-          studentEmail,
-          studentName,
+      .post(
+        url,
+        {
+          // participants: participants.join(","),
+          participants: {
+            mcEmail,
+            mcName,
+            studentEmail,
+            studentName,
+          },
         },
-      },
-      {
-      headers: {
-        Authorization: userId,
-        "Content-Type": "application/json",
-      },},)
+        {
+          headers: {
+            Authorization: userId,
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((response) => {
         console.log("res notify: ", response.data);
       });
