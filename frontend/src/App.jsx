@@ -248,7 +248,7 @@ function App() {
             />
           </div>
         ) : (
-          <div className="app-card">
+          <div>
             <AdminForm admin={admin} handleAdminSave={handleAdminSave} />
           </div>
         )

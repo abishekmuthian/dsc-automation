@@ -184,7 +184,7 @@ async function getInclusivePedagogy(
     suggestion = completion.choices[0].message.content;
 
     // console.log("Inclusive pedagogy: ", inclusivePedagogy);
-    inclusivePedagogyResults.push(insertBrBeforeNumbering(suggestion));
+    inclusivePedagogyResults.push(formatMessage(suggestion));
 
     // console.log("Inclusive pedagogy: ", inclusivePedagogyResults.toString());
   } catch (error) {
@@ -223,6 +223,9 @@ async function sendEmail(subject, recipient, body, nylas) {
   }
 }
 
-function insertBrBeforeNumbering(text) {
-  return text.replace(/(\d+\.)/g, "<br>$1");
+function formatMessage(text) {
+  // Make the text between numbering and colon bold
+  // Insert <br><br> before the numbering
+
+  return text.replace(/(\d+\.\s)(.*?):/g, "<br><br>$1<b><i>$2</i></b>:");
 }

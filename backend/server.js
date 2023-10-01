@@ -308,8 +308,6 @@ app.post("/add/student-input", async (req, res) => {
     guardianEmail,
     other,
     otherDetails,
-    crossSchool,
-    mandatory,
   } = req.body;
   console.log("backend name", studentId);
   console.log("backend email", name);
@@ -331,8 +329,6 @@ app.post("/add/student-input", async (req, res) => {
       guardianEmail,
       other,
       otherDetails,
-      crossSchool,
-      mandatory,
     },
   });
   console.log("admin created");

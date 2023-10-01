@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import Switch from "react-switch";
+import "../../styles/admin.scss";
 
 const AdminForm = ({ admin, handleAdminSave }) => {
   const emailRef = useRef(null);
@@ -21,11 +22,11 @@ const AdminForm = ({ admin, handleAdminSave }) => {
   };
 
   return (
-    <section className="form_page">
-      <form className="admin_form" onSubmit={handleSubmit}>
-        <h2>Admin Form Save</h2>
-        <div className="form_inputs">
-          <div>
+    <div className="create-admin-form-view">
+      <h2>Admin Form</h2>
+      <form class="scrollbar" onSubmit={handleSubmit}>
+        <div className="row">
+          <div className="field-container">
             <label htmlFor="name">Medical Counselor Name</label>
             <input
               type="text"
@@ -36,7 +37,9 @@ const AdminForm = ({ admin, handleAdminSave }) => {
               required
             />
           </div>
-          <div>
+        </div>
+        <div className="row">
+          <div className="field-container">
             <label htmlFor="email">Medical Counselor Email</label>
             <input
               type="text"
@@ -48,9 +51,13 @@ const AdminForm = ({ admin, handleAdminSave }) => {
             />
           </div>
         </div>
-        <button type="submit">Save</button>
+        <div className="row">
+          <div className="field-container">
+            <button type="submit">Save</button>
+          </div>
+        </div>
       </form>
-    </section>
+    </div>
   );
 };
 

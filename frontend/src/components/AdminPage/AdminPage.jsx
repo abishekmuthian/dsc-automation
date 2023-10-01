@@ -82,7 +82,7 @@ const AdminPage = ({
     let headings = Object.keys(student);
     let studentKeyValueArr = Object.entries(student);
 
-    const title = "Student Disability Data";
+    const title = `${student.studentId}(${student.name})` + " DSC Data";
 
     const headers = [[...headings]];
 
@@ -152,6 +152,7 @@ const AdminPage = ({
           display: "flex",
           flexDirection: "column",
           width: "50%",
+          padding: "0px 5px",
         }}
       >
         <div>

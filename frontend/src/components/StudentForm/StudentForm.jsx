@@ -19,9 +19,7 @@ const StudentForm = ({}) => {
   const guardianRef = useRef(null);
   const guardianContactRef = useRef(null);
   const guardianEmailRef = useRef(null);
-  const crossSchoolRef = useRef(null);
   const genderRef = useRef(null);
-  const mandatoryRef = useRef(null);
 
   const [disability, setDisability] = useState("");
   const [dataStored, setDataStored] = useState(false);
@@ -108,8 +106,6 @@ const StudentForm = ({}) => {
       guardianContact: "",
       other: "",
       otherDetails: "",
-      crossSchool: "",
-      mandatory: "",
     };
     studentInput.studentId = studentIdRef.current.value;
     studentInput.email = emailRef.current.value;
@@ -130,8 +126,6 @@ const StudentForm = ({}) => {
     formInputs.guardianEmail = guardianEmailRef.current.value;
     formInputs.other = otherRef.current.value;
     formInputs.otherDetails = otherDetailsRef.current.value;
-    formInputs.crossSchool = crossSchoolRef.current.value;
-    formInputs.mandatory = mandatoryRef.current.value;
 
     console.log("Form Inputs: ", formInputs);
 
@@ -159,10 +153,10 @@ const StudentForm = ({}) => {
   return (
     <div className="create-student-form-view">
       <h2>Student Form</h2>
-      <form className="student_form scrollbar" onSubmit={handleSubmit}>
+      <form className="scrollbar" onSubmit={handleSubmit}>
         <div className="row">
           <div className="field-container">
-            <label htmlFor="studentId">Student Id</label>
+            <label htmlFor="studentId">Student Id *</label>
             <input
               type="text"
               id="studentId"
@@ -174,7 +168,7 @@ const StudentForm = ({}) => {
         </div>
         <div className="row">
           <div className="field-container">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name *</label>
             <input
               type="text"
               id="name"
@@ -186,7 +180,7 @@ const StudentForm = ({}) => {
         </div>
         <div className="row">
           <div className="field-container">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email *</label>
             <input
               type="text"
               id="email"
@@ -211,7 +205,7 @@ const StudentForm = ({}) => {
           </div> */}
         <div className="row">
           <div className="field-container">
-            <label htmlFor="programme">Programme</label>
+            <label htmlFor="programme">Programme *</label>
             <input
               type="text"
               id="programme"
@@ -224,7 +218,7 @@ const StudentForm = ({}) => {
         </div>
         <div className="row">
           <div className="course-type">
-            <p>Select Course Type</p>
+            <label>Select Course Type *</label>
             <div className="radio-type">
               <input
                 className="radio-button"
@@ -257,7 +251,7 @@ const StudentForm = ({}) => {
         </div>
         <div className="row">
           <div className="field-container">
-            <label htmlFor="dob">Date Of Birth</label>
+            <label htmlFor="dob">Date Of Birth *</label>
             <input
               type="date"
               id="dob"
@@ -272,7 +266,7 @@ const StudentForm = ({}) => {
             <label htmlFor="text">
               Gender
               <select onChange={handleGenderChange} ref={genderRef} required>
-                <option value="">Select Gender</option>
+                <option value="">Select Gender *</option>
                 <option value="Female">Female</option>
                 <option value="Male">Male</option>
                 <option value="Other">Other</option>
@@ -341,7 +335,7 @@ const StudentForm = ({}) => {
 
         <div className="disability-check">
           <label htmlFor="">
-            Nature of Student's Physical/Medical/Psychological Condition
+            Nature of Student's Physical/Medical/Psychological Condition *
           </label>
           <div className="field-container">
             <div className="disability-checkbox">
@@ -527,7 +521,7 @@ const StudentForm = ({}) => {
             {" "}
             <label htmlFor="other-details">
               For how long have you been experiencing the aforementioned
-              condition? / When was the issue first diagnosed?
+              condition? / When was the issue first diagnosed?*
             </label>
             <textarea
               ref={otherDetailsRef}
@@ -535,40 +529,6 @@ const StudentForm = ({}) => {
               rows={4}
               cols={40}
               id="other-details"
-            />
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="field-container">
-            <label htmlFor="mandatory">
-              [MANDATORY INFORMATION] Please provide the following information:
-              1) COURSES opted for this semester 2) Whether CORE/ELECTIVE. 3)
-              Name(s) of respective COURSE INSTRUCTORS in the following format:
-              1) Qualitative Research Methods - CORE/ELECTIVE - Prof. XYZ 2)
-              ..... *
-            </label>
-            <textarea
-              ref={mandatoryRef}
-              name="mandatory"
-              id="mandatory"
-              rows={4}
-              cols={40}
-            />
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="field-container">
-            <label htmlFor="cross-school">
-              Cross Registered School Name & Course details, if any (Doubt)
-            </label>
-            <input
-              type="text"
-              id="cross-school"
-              ref={crossSchoolRef}
-              className="form_text_input"
-              placeholder=""
               required
             />
           </div>
@@ -576,7 +536,9 @@ const StudentForm = ({}) => {
 
         <div className="row">
           <div className="course-type">
-            <p>DECLARATION & AGREEMENT (PLEASE CLICK BELOW AFTER READING)</p>
+            <label>
+              Declaration & Agreement (Please click below after reading)
+            </label>
             <div className="radio-type">
               <input
                 className="radio-button"
@@ -584,6 +546,7 @@ const StudentForm = ({}) => {
                 name="agree"
                 id="agree"
                 onChange={onAgree}
+                required
               />
               <label className="radio-desc" htmlFor="agree">
                 I agree with the above

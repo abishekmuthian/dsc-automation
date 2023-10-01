@@ -35,8 +35,5 @@ model StudentForm {
   guardianContact String
   guardianEmail String
   other String
-  otherDetails String
-  crossSchool String
-  mandatory String
-  
+  otherDetails String  
 }
