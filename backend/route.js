@@ -47,7 +47,7 @@ exports.freeBusy = async (req, res, user) => {
     emails: [user.email], //Use admin email id here
   });
 
-  console.log("Calendar free time: ", freeBusy);
+  // console.log("Calendar free time: ", freeBusy);
 };
 
 exports.emailNotification = async (req, res, prisma, openai) => {
@@ -56,7 +56,6 @@ exports.emailNotification = async (req, res, prisma, openai) => {
   const nylas = Nylas.with(user.accessToken);
 
   const { participants } = req.body;
-  console.log("backend - participants : ", participants);
 
   // Find the student's disability
 
@@ -66,8 +65,6 @@ exports.emailNotification = async (req, res, prisma, openai) => {
       email: participants.studentEmail,
     },
   });
-
-  console.log("Student data: ", student);
 
   studentDisabilities = student.disability.split(",");
 
@@ -102,8 +99,6 @@ exports.emailNotification = async (req, res, prisma, openai) => {
   // );
 
   emailBody = emailBody + inclusivePedagogyResults.join("<br><br>");
-
-  console.log("emailBody: ", emailBody);
 
   sendEmail(
     "Inclusive pedagogy for " + participants.studentName,
@@ -183,10 +178,7 @@ async function getInclusivePedagogy(
 
     suggestion = completion.choices[0].message.content;
 
-    // console.log("Inclusive pedagogy: ", inclusivePedagogy);
     inclusivePedagogyResults.push(formatMessage(suggestion));
-
-    // console.log("Inclusive pedagogy: ", inclusivePedagogyResults.toString());
   } catch (error) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
@@ -216,8 +208,6 @@ async function sendEmail(subject, recipient, body, nylas) {
     draft.save();
 
     draft.send();
-
-    console.log("Email sent successfully");
   } catch (error) {
     console.error("Error sending email:", error);
   }

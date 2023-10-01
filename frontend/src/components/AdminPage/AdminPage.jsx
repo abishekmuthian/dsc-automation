@@ -77,7 +77,6 @@ const AdminPage = ({
     for (let key in student) {
       studentDataArray.push({ [key]: student[key] });
     }
-    console.log("studnt array: ", studentDataArray);
 
     let headings = Object.keys(student);
     let studentKeyValueArr = Object.entries(student);
@@ -110,7 +109,6 @@ const AdminPage = ({
 
   const handleEventCreator = useCallback(
     (name) => {
-      // console.log("event create log anme: ", name);
       setSelectedStduent(name);
     },
     [selectedStudent]

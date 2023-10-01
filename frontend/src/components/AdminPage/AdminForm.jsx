@@ -24,7 +24,7 @@ const AdminForm = ({ admin, handleAdminSave }) => {
   return (
     <div className="create-admin-form-view">
       <h2>Admin Form</h2>
-      <form class="scrollbar" onSubmit={handleSubmit}>
+      <form className="scrollbar" onSubmit={handleSubmit}>
         <div className="row">
           <div className="field-container">
             <label htmlFor="name">Medical Counselor Name</label>

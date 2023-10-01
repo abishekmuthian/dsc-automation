@@ -89,32 +89,17 @@ app.post("/nylas/exchange-mailbox-token", express.json(), async (req, res) => {
   );
 
   // Normally store the access token in the DB
-  console.log("Access Token was generated for: " + emailAddress);
 
-  // Replace this mock code with your actual database operations - uncomment or delete the below 4 lines
-  // const user = await mockDb.createOrUpdateUser(emailAddress, {
-  //   accessToken,
-  //   emailAddress,
-  // });
-
-  // replace mockdb for create/update
-  // app.get("/get/admin-data", async (req, res) => {
-  //   const adminData = await prisma.user.findMany();
-  //   console.log("admin data from  server: ", adminData);
-  //   res.json(adminData);
-  // });
-  // console.log("replace - input user.id: ", user.id);
   const adminUser = await prisma.user.findUnique({
     where: {
       // id: parseInt(user.id),
       email: emailAddress,
     },
   });
-  console.log("replace - create or update adminUser FIND: ", adminUser);
+
   // res.json(adminUser);
 
   const updateAdmin = async (adminId, emailAddress, accessToken) => {
-    console.log("update admin id: ", adminId);
     const updAdmin = await prisma.user.update({
       where: {
         // id: parseInt(adminUser.id),
@@ -126,7 +111,7 @@ app.post("/nylas/exchange-mailbox-token", express.json(), async (req, res) => {
         accessToken: accessToken,
       },
     });
-    console.log("replace - adminUser updated with userToken: ", updAdmin);
+
     return updAdmin;
   };
 
@@ -140,40 +125,13 @@ app.post("/nylas/exchange-mailbox-token", express.json(), async (req, res) => {
         medicalCounselorEmail: "",
       },
     });
-    console.log("replace - adminUser created", newAdmin);
+
     return newAdmin;
   };
 
   const adminUserData = adminUser
     ? await updateAdmin(adminUser.id, emailAddress, accessToken)
     : await createAdmin(emailAddress, accessToken);
-
-  console.log("replace - adminUserData: ", adminUserData);
-  // if (adminUser) {
-  //   const updAdmin = await prisma.user.update({
-  //     where: {
-  //       id: parseInt(adminUser.id),
-  //     },
-  //     data: {
-  //       name: "",
-  //       email: emailAddress,
-  //       accessToken: accessToken,
-  //     },
-  //   });
-  //   console.log("replace - adminUser updated with userToken: ", updAdmin);
-  //   // res.json(admin);
-  // } else {
-  //   const updAdmin = await prisma.user.create({
-  //     data: {
-  //       name: "",
-  //       email: emailAddress,
-  //       accessToken: accessToken,
-  //     },
-  //   });
-  //   console.log("replace - adminUser created", updAdmin);
-  //   // res.json(admin);
-  // }
-  // replace mockdb for create/update
 
   // Return an authorization object to the user
   return res.json({
@@ -188,24 +146,11 @@ async function isAuthenticated(req, res, next) {
     return res.status(401).json("Unauthorized");
   }
 
-  // Query our mock db to retrieve the stored user access token
-  // console.log("request for auth check:::::: ", req);
-  // console.log("request for auth check:::::: ", req.headers);
-  // console.log("mockdb - hd-auth: ", req.headers.authorization);
-  // console.log("id");
-  // const user = await mockDb.findUser(req.headers.authorization);
-  // console.log("mockdb - user: ", user);
-  // replacing mockDB
-
   const adminData = await prisma.user.findUnique({
     where: {
       id: parseInt(req.headers.authorization),
     },
   });
-  console.log("replace - get admin to check auth: ", adminData);
-  // res.json(adminData);
-
-  //replacing mockDB
 
   if (!adminData) {
     return res.status(401).json("Unauthorized");
@@ -242,15 +187,12 @@ app.post("/send/email-notification", isAuthenticated, (req, res) => {
 
 app.get("/get/admin-data", async (req, res) => {
   const adminData = await prisma.user.findMany();
-  console.log("admin data from  server: ", adminData);
+
   res.json(adminData);
 });
 
 app.post("/add/admin-data", async (req, res) => {
   const { id, medicalCounselorName, medicalCounselorEmail } = req.body;
-  console.log("backend id: ", id);
-  console.log("backend name", medicalCounselorName);
-  console.log("backend email", medicalCounselorEmail);
 
   const admin = await prisma.user.update({
     where: {
@@ -261,19 +203,18 @@ app.post("/add/admin-data", async (req, res) => {
       medicalCounselorEmail,
     },
   });
-  console.log("Medical counselor details added/updated");
+
   res.json(admin);
 });
 
 app.put("/enable/student-form", async (req, res) => {
   const { id, studentFormToggle } = req.body;
-  console.log("put-req id: ", id);
-  console.log("put-req toggle: ", studentFormToggle);
+
   const admin = await prisma.user.update({
     where: { id },
     data: { studentFormToggle },
   });
-  console.log("admin after updating medical counselor details: ", admin);
+
   res.json(admin);
 });
 
@@ -288,7 +229,7 @@ app.put("/delete/admin-data/:id", async (req, res) => {
       medicalCounselorEmail: "",
     },
   });
-  console.log("user deleted after DEL request: ", admin);
+
   res.json(admin);
 });
 
@@ -309,10 +250,7 @@ app.post("/add/student-input", async (req, res) => {
     other,
     otherDetails,
   } = req.body;
-  console.log("backend name", studentId);
-  console.log("backend email", name);
-  console.log("backend email", email);
-  console.log("backend disability", disability);
+
   const admin = await prisma.studentForm.create({
     data: {
       studentId,
@@ -331,7 +269,6 @@ app.post("/add/student-input", async (req, res) => {
       otherDetails,
     },
   });
-  console.log("admin created");
 
   // To find the free busy time
   // console.log("Checking for free busy time");
@@ -343,7 +280,6 @@ app.post("/add/student-input", async (req, res) => {
 
 app.get("/get/student-input", async (req, res) => {
   const studentInputs = await prisma.studentForm.findMany();
-  console.log("fetched student input data: ", studentInputs);
   res.json(studentInputs);
 });
 

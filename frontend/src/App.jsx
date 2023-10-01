@@ -37,7 +37,7 @@ function App() {
     axios.get(url).then((res) => {
       if (res.data.length > 0) {
         setAdmin(res.data[0]);
-        console.log("setting admin state: ", res.data[0]);
+
         if (res.data[0].studentFormToggle) {
           setShowStudentForm(true);
         }
@@ -126,7 +126,7 @@ function App() {
   const getPrimaryCalendar = async () => {
     try {
       const url = serverBaseUrl + "/nylas/read-calendars";
-      // console.log("user id before getting primary: ", userId, typeof userId);
+
       const res = await fetch(url, {
         method: "GET",
         headers: {
@@ -134,7 +134,7 @@ function App() {
           "Content-Type": "application/json",
         },
       });
-      // console.log("fetch calendar res: ", res);
+
       if (!res.ok) {
         throw new Error(res.statusText);
       }

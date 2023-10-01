@@ -42,10 +42,6 @@ function CreateEventForm({
 
   const createEvent = async (e) => {
     e.preventDefault();
-    console.log("calendar id: ", calendarId);
-    console.log("participants: ", participants);
-    console.log("title: ", title);
-    console.log("description: ", description);
     try {
       const url = serverBaseUrl + "/nylas/create-events";
 
@@ -66,26 +62,23 @@ function CreateEventForm({
           studentName,
         }),
       });
-      console.log("res : ", res);
+
       if (!res.ok) {
-        console.log("error while creating event", res);
         setToastNotification("error");
         throw new Error(res.statusText);
       }
 
       const data = await res.json();
 
-      console.log("Event created:", data);
-
       // reset form fields
       setStartTime(convertUTCDate(new Date()));
       setEndTime(convertUTCDate(new Date()));
       setTitle("");
       setDescription("");
-      console.log("before event from set");
+
       setShowCreateEventForm(false);
       setToastNotification("success");
-      console.log("after event from set");
+
       refresh();
     } catch (err) {
       console.warn(`Error creating event:`, err);

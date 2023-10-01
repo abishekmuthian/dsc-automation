@@ -24,6 +24,7 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
   const [showBottomScrollShadow, setShowBottomScrollShadow] = useState(false);
   const [userId, setUserId] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [hover, setHover] = useState(false);
 
   useEffect(() => {
     initializeScrollShadow(".description-container", setShowBottomScrollShadow);
@@ -61,20 +62,33 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
     }
   }, []);
 
+  const handleMouseHover = () => {
+    setHover(true);
+  };
+
+  const handleMouseLeave = () => {
+    setHover(false);
+  };
+
+  const styleConfig = {
+    backgroundColor: hover ? "#4169e1" : "white",
+    color: hover ? "white" : "#4169e1",
+    padding: "10px 20px",
+    border: "none",
+    cursor: "pointer",
+    transition: "background-color 0.3s, color 0.3s",
+    ":hover": {
+      backgroundColor: "blue",
+      color: "white",
+    },
+  };
+
   const handleNotify = (event) => {
     let participants = [];
     for (let i = 0; i < event.participants.length; i++) {
       participants.push(event.participants[i]["email"]);
     }
 
-    // console.log("Organizers: ", getOrganizerString(event));
-
-    console.log("User ID: ", userId);
-    console.log("User Email: ", userEmail);
-
-    console.log("organizer details: ", getOrganizerString(event));
-    // let mcEmail = event.participants[0]["email"];
-    // let studentEmail = event.participants[1]["email"];
     let studentEmail = event.title.split("|")[2].trim();
     let studentName = event.title.split("|")[1].trim();
 
@@ -83,7 +97,6 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
       .post(
         url,
         {
-          // participants: participants.join(","),
           participants: {
             mcEmail,
             mcName,
@@ -99,7 +112,7 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
         }
       )
       .then((response) => {
-        console.log("res notify: ", response.data);
+        console.log("notified");
       });
   };
 
@@ -228,7 +241,12 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
                 __html: cleanDescription(selectedEvent.description),
               }}
             ></p>
-            <button onClick={() => handleNotify(selectedEvent)}>
+            <button
+              onClick={() => handleNotify(selectedEvent)}
+              style={styleConfig}
+              onMouseEnter={handleMouseHover}
+              onMouseLeave={handleMouseLeave}
+            >
               Notify Counselor
             </button>
             <div
