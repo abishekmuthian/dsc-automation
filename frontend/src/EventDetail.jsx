@@ -70,19 +70,6 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
     setHover(false);
   };
 
-  const styleConfig = {
-    backgroundColor: hover ? "#4169e1" : "white",
-    color: hover ? "white" : "#4169e1",
-    padding: "10px 20px",
-    border: "none",
-    cursor: "pointer",
-    transition: "background-color 0.3s, color 0.3s",
-    ":hover": {
-      backgroundColor: "blue",
-      color: "white",
-    },
-  };
-
   const handleNotify = (event) => {
     let participants = [];
     for (let i = 0; i < event.participants.length; i++) {
@@ -243,7 +230,6 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
             ></p>
             <button
               onClick={() => handleNotify(selectedEvent)}
-              style={styleConfig}
               onMouseEnter={handleMouseHover}
               onMouseLeave={handleMouseLeave}
             >
