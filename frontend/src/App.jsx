@@ -263,6 +263,7 @@ function App() {
             events={events}
             refresh={refresh}
             mcName={admin.medicalCounselorName}
+            mcEmail={admin.medicalCounselorEmail}
           />
         </div>
       )}
