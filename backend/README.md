@@ -1,4 +1,4 @@
-# Read and create calendar events Nylas sample app
+# Disability Support Committee Automation - Backend
 
 An implementation with Node Express.
 
@@ -11,7 +11,7 @@ An implementation with Node Express.
 
 ### Set up your `.env` file
 
-Go to the Nylas Dashboard, and choose the Quickstart Application.
+1. Go to the Nylas Dashboard, and choose the Quickstart Application.
 
 Click **App Settings** to see the `client_id` and `client_secret` for the Quickstart app.
 
@@ -23,6 +23,8 @@ CLIENT_ID=client_id...
 CLIENT_SECRET=client_secret...
 ```
 
+2. Get the [openai](https://openai.com/product) API Key and enter it in `OPENAI_API_KEY`.
+
 ### Install Node dependencies
 
 Run the following command to install the Node dependencies for this sample app.
@@ -31,9 +33,13 @@ Run the following command to install the Node dependencies for this sample app.
 npm install
 ```
 
-The `package.json` in this sample already includes the Nylas package. If you were installing this on your own app, you would add the package as a dependency by running:
+### Setup Prisma
 
-`npm install --save nylas`
+Setup local sqlite database using prisma.
+
+`npx prisma migrate dev --name init`
+
+`npx prisma generate`
 
 ### Run the backend server locally
 
