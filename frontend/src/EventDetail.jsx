@@ -24,7 +24,6 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
   const [showBottomScrollShadow, setShowBottomScrollShadow] = useState(false);
   const [userId, setUserId] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  const [hover, setHover] = useState(false);
 
   useEffect(() => {
     initializeScrollShadow(".description-container", setShowBottomScrollShadow);
@@ -61,14 +60,6 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
       setUserId(userIdString);
     }
   }, []);
-
-  const handleMouseHover = () => {
-    setHover(true);
-  };
-
-  const handleMouseLeave = () => {
-    setHover(false);
-  };
 
   const handleNotify = (event) => {
     let participants = [];
@@ -228,11 +219,7 @@ function EventDetail({ selectedEvent, mcName, mcEmail }) {
                 __html: cleanDescription(selectedEvent.description),
               }}
             ></p>
-            <button
-              onClick={() => handleNotify(selectedEvent)}
-              onMouseEnter={handleMouseHover}
-              onMouseLeave={handleMouseLeave}
-            >
+            <button onClick={() => handleNotify(selectedEvent)}>
               Notify Counselor
             </button>
             <div
