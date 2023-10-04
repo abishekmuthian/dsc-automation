@@ -4,10 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "vite --port 443",
+    "start": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "host": "vite --host"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@nylas/nylas-react": "^0.1.0",
