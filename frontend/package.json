@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "vite --port 443",
+    "start": "vite --port 3000 --open",
     "build": "vite build",
     "preview": "vite preview"
   },

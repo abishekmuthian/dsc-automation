@@ -664,6 +664,11 @@ const StudentForm = ({}) => {
           <div className="course-type">
             <label>
               Declaration & Agreement (Please click below after reading)
+              <br />
+              <br />I hereby declare that the information given by me in the
+              Application is true, complete and correct to the best of my
+              knowledge and belief and that nothing has been concealed or
+              distorted.
             </label>
             <div className="radio-type">
               <input

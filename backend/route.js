@@ -72,7 +72,7 @@ exports.emailNotification = async (req, res, prisma, openai) => {
     "<h3>" +
     student.name +
     " is living with " +
-    studentDisabilities.toString() +
+    studentDisabilities.join(", ") +
     "." +
     "</h3>";
   emailBody = emailBody + "<br>" + "<br>";
