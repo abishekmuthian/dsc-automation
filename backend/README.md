@@ -23,7 +23,12 @@ CLIENT_ID=client_id...
 CLIENT_SECRET=client_secret...
 ```
 
-2. Get the [openai](https://openai.com/product) API Key and enter it in `OPENAI_API_KEY`.
+3. `NYLAS_API_SERVER=https://api.nylas.com`
+
+4. Get the [openai](https://openai.com/product) API Key and enter it in `OPENAI_API_KEY`.
+
+5. Setup Sqlite3 database
+   `DATABASE_URL="file:./dev.db"`
 
 ### Install Node dependencies
 
