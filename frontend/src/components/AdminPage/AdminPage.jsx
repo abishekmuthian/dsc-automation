@@ -40,22 +40,6 @@ const AdminPage = ({
     refresh();
   }, []);
 
-  // const handleAdminCalendar = () => {
-  //   setCalendarButton(!calendarButton);
-  //   enableCalendar();
-  // };
-
-  // const handleAdminCalendar = useCallback(() => {
-  //   setCalendarButton(!calendarButton);
-  //   enableCalendar();
-  // });
-
-  // const handleChange = (nextChecked) => {
-  //   setChecked(nextChecked);
-  //   // console.log("admin data while toggling: ", admin);
-  //   handleStudentToggle({ ...admin, studentFormToggle: nextChecked });
-  // };
-
   const handleChange = useCallback(
     (nextChecked) => {
       setChecked(nextChecked);
@@ -247,17 +231,3 @@ const AdminPage = ({
 };
 
 export default AdminPage;
-
-{
-  /* <div>
-<CalendarApp
-  userId={userId}
-  calendarId={calendarId}
-  serverBaseUrl={serverBaseUrl}
-  isLoading={isLoading}
-  setIsLoading={setIsLoading}
-  events={events}
-  refresh={refresh}
-/>
-</div> */
-}

@@ -1,10 +1,45 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import StudentDetailSaved from "./StudentDetailSaved";
-
-// import "./StudentForm.css";
+import { z } from "zod";
 
 import "../../styles/student.scss";
+
+const studentSchema = z.object({
+  studentId: z
+    .string()
+    .min(3, "Student ID must be greater than 3 characters")
+    .max(15),
+  email: z.string().email("Enter a valid email address"),
+  name: z.string().min(3, "Enter atleast 3 characters").max(50),
+  programme: z.string().min(2, "Enter atleast 2 characters").max(50),
+  contact: z
+    .string()
+    .min(10, "Contact number must be 10 digits")
+    .refine(
+      (phone) => {
+        const contactNumber = Number(phone);
+        return isFinite(contactNumber);
+      },
+      {
+        message: "Contact number should be a valid number",
+      }
+    ),
+  guardian: z.string().min(3, "Enter atleast 3 characters").max(50),
+  guardianContact: z
+    .string()
+    .min(10, "Contact number must be 10 digits")
+    .refine(
+      (phone) => {
+        const contactNumber = Number(phone);
+        return isFinite(contactNumber);
+      },
+      {
+        message: "Contact number should be a valid number",
+      }
+    ),
+  guardianEmail: z.string().email("Enter a valid email address"),
+});
 
 const StudentForm = ({}) => {
   const studentIdRef = useRef(null);
@@ -27,6 +62,17 @@ const StudentForm = ({}) => {
   const [agree, setAgree] = useState(true);
   const [gender, setGender] = useState("");
   const [disabilityList, setDisabilityList] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [formErrors, setFormErros] = useState({
+    studentId: "",
+    name: "",
+    programme: "",
+    email: "",
+    contact: "",
+    guardian: "",
+    guardianContact: "",
+    guardianEmail: "",
+  });
 
   const handleDisabilityChange = (e) => {
     const { value, checked } = e.target;
@@ -84,8 +130,23 @@ const StudentForm = ({}) => {
     setDisability(event.target.value);
   };
 
+  const clearErrorMessage = (e) => {
+    const { name, value } = e.target;
+
+    setFormErros({ ...formErrors, [name]: "" });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
+    setFormErros({
+      studentId: "",
+      name: "",
+      programme: "",
+      email: "",
+      contact: "",
+      guardian: "",
+      guardianContact: "",
+      guardianEmail: "",
+    });
     const studentInput = {
       studentId: "",
       name: "",
@@ -104,16 +165,20 @@ const StudentForm = ({}) => {
       contact: "",
       guardian: "",
       guardianContact: "",
+      guardianEmail: "",
       other: "",
       otherDetails: "",
     };
+
     studentInput.studentId = studentIdRef.current.value;
     studentInput.email = emailRef.current.value;
     studentInput.name = nameRef.current.value;
     studentInput.disability = disability;
 
-    formInputs.studentId = studentIdRef.current.value;
-    formInputs.email = emailRef.current.value;
+    let originalStudentId = studentIdRef.current.value;
+    formInputs.studentId = originalStudentId.toUpperCase();
+    let originalEmail = emailRef.current.value;
+    formInputs.email = originalEmail.toUpperCase();
     formInputs.name = nameRef.current.value;
     formInputs.disability = disabilityList.join(",");
     formInputs.programme = programmeRef.current.value;
@@ -126,26 +191,58 @@ const StudentForm = ({}) => {
     formInputs.guardianEmail = guardianEmailRef.current.value;
     formInputs.other = otherRef.current.value;
     formInputs.otherDetails = otherDetailsRef.current.value;
+    const formData = {
+      studentId: originalStudentId.toUpperCase(),
+      name: nameRef.current.value,
+      email: originalEmail.toUpperCase(),
+      contact: contactRef.current.value,
+      programme: programmeRef.current.value,
+      guardian: guardianRef.current.value,
+      guardianContact: guardianContactRef.current.value,
+      guardianEmail: guardianEmailRef.current.value,
+    };
 
-    console.log("Form Inputs: ", formInputs);
+    try {
+      const validateFormData = studentSchema.parse(formData);
 
-    // console.log("student Input: ", studentInput);
-    const url = serverBaseUrl + "/add/student-input";
-    axios
-      .post(url, formInputs)
-      .then((response) => {
-        console.log("Added form Inputs", response.data);
-        setDataStored(true);
-      })
-      .catch((err) => {
-        setDataStored(false);
-        // console.log("Error saving student input");
-      });
+      const url = serverBaseUrl + "/add/student-input";
+      axios
+        .post(url, formInputs)
+        .then((response) => {
+          if (response.status === 201) {
+            setDataStored(true);
+            emailRef.current.value = "";
+            nameRef.current.value = "";
+            studentIdRef.current.value = "";
+          } else {
+            if (response.data.message === "Unique Constraint Error") {
+              setDataStored(false);
+              setErrorMessage("Student Record already exists");
+            } else {
+              setDataStored(false);
+              setErrorMessage("Server Error");
+            }
+          }
+        })
+        .catch((err) => {
+          setDataStored(false);
+          setErrorMessage("Student record save failed");
+        });
 
-    emailRef.current.value = "";
-    nameRef.current.value = "";
-    studentIdRef.current.value = "";
-    // disabilityRef.current.value = "";
+      // disabilityRef.current.value = "";
+    } catch (err) {
+      // setFormErros(err.formErrors);
+
+      const listOfErrors = {};
+      for (let formFieldErr of err.errors) {
+        if (formFieldErr.path) {
+          listOfErrors[formFieldErr.path[0]] = formFieldErr.message;
+        }
+      }
+
+      setFormErros({ ...listOfErrors });
+      setErrorMessage("Check all the fields and enter valid input");
+    }
   };
 
   if (dataStored) return <StudentDetailSaved />;
@@ -153,17 +250,23 @@ const StudentForm = ({}) => {
   return (
     <div className="create-student-form-view">
       <h2>Student Form</h2>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <form className="scrollbar" onSubmit={handleSubmit}>
         <div className="row">
           <div className="field-container">
             <label htmlFor="studentId">Student Id *</label>
             <input
               type="text"
+              name="studentId"
               id="studentId"
               ref={studentIdRef}
               placeholder="Student Id"
+              onChange={clearErrorMessage}
               required
             />
+            {formErrors?.studentId && (
+              <p className="error-message">{formErrors.studentId}</p>
+            )}
           </div>
         </div>
         <div className="row">
@@ -172,10 +275,15 @@ const StudentForm = ({}) => {
             <input
               type="text"
               id="name"
+              name="name"
               ref={nameRef}
               placeholder="Student full Name"
+              onChange={clearErrorMessage}
               required
             />
+            {formErrors?.name && (
+              <p className="error-message">{formErrors.name}</p>
+            )}
           </div>
         </div>
         <div className="row">
@@ -184,36 +292,34 @@ const StudentForm = ({}) => {
             <input
               type="text"
               id="email"
+              name="email"
               ref={emailRef}
               placeholder="Email id"
+              onChange={clearErrorMessage}
               required
             />
+            {formErrors?.email && (
+              <p className="error-message">{formErrors.email}</p>
+            )}
           </div>
         </div>
-        {/* <div>
-            <label htmlFor="text">
-              Disability
-              <select onChange={handleChange} ref={disabilityRef} required>
-                <option value="">All Categories</option>
-                {disabilityOptions.map((option, index) => (
-                  <option key={index} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div> */}
+
         <div className="row">
           <div className="field-container">
             <label htmlFor="programme">Programme *</label>
             <input
               type="text"
               id="programme"
+              name="programme"
               ref={programmeRef}
               className="form_text_input"
               placeholder="Programme"
+              onChange={clearErrorMessage}
               required
             />
+            {formErrors?.programme && (
+              <p className="error-message">{formErrors.programme}</p>
+            )}
           </div>
         </div>
         <div className="row">
@@ -281,11 +387,16 @@ const StudentForm = ({}) => {
             <input
               type="text"
               id="contact"
+              name="contact"
               ref={contactRef}
               className="form_text_input"
               placeholder="Student contact number"
+              onChange={clearErrorMessage}
               required
             />
+            {formErrors?.contact && (
+              <p className="error-message">{formErrors.contact}</p>
+            )}
           </div>
         </div>
 
@@ -295,11 +406,16 @@ const StudentForm = ({}) => {
             <input
               type="text"
               id="guardian"
+              name="guardian"
               ref={guardianRef}
               className="form_text_input"
               placeholder="Guardian's name"
+              onChange={clearErrorMessage}
               required
             />
+            {formErrors?.guardian && (
+              <p className="error-message">{formErrors.guardian}</p>
+            )}
           </div>
         </div>
 
@@ -311,25 +427,35 @@ const StudentForm = ({}) => {
             <input
               type="text"
               id="guardian-contact"
+              name="guardianContact"
               ref={guardianContactRef}
               className="form_text_input"
               placeholder="guardian contact number"
+              onChange={clearErrorMessage}
               required
             />
+            {formErrors?.guardianContact && (
+              <p className="error-message">{formErrors.guardianContact}</p>
+            )}
           </div>
         </div>
 
         <div className="row">
           <div className="field-container">
-            <label htmlFor="guardian-contact">Guardian's emaill address</label>
+            <label htmlFor="guardian-email">Guardian's emaill address</label>
             <input
               type="text"
-              id="guardian-contact"
+              id="guardian-email"
+              name="guardianEmail"
               ref={guardianEmailRef}
               className="form_text_input"
               placeholder="guardian email"
+              onChange={clearErrorMessage}
               required
             />
+            {formErrors?.guardianEmail && (
+              <p className="error-message">{formErrors.guardianEmail}</p>
+            )}
           </div>
         </div>
 
@@ -557,7 +683,7 @@ const StudentForm = ({}) => {
 
         <div className="row">
           <div className="field-container">
-            <button type="submit">Save</button>
+            <button type="submit">Save</button>{" "}
           </div>
         </div>
       </form>

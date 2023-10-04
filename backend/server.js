@@ -251,31 +251,43 @@ app.post("/add/student-input", async (req, res) => {
     otherDetails,
   } = req.body;
 
-  const admin = await prisma.studentForm.create({
-    data: {
-      studentId,
-      name,
-      email,
-      disability,
-      programme,
-      courseType,
-      dob,
-      gender,
-      contact,
-      guardian,
-      guardianContact,
-      guardianEmail,
-      other,
-      otherDetails,
-    },
-  });
+  try {
+    const admin = await prisma.studentForm.create({
+      data: {
+        studentId,
+        name,
+        email,
+        disability,
+        programme,
+        courseType,
+        dob,
+        gender,
+        contact,
+        guardian,
+        guardianContact,
+        guardianEmail,
+        other,
+        otherDetails,
+      },
+    });
+
+    res.status(201).json(admin);
+  } catch (err) {
+    if (err.code === "P2002") {
+      res.json({
+        message: "Unique Constraint Error",
+      });
+    } else {
+      res.json({
+        message: "Other Server Error",
+      });
+    }
+  }
 
   // To find the free busy time
   // console.log("Checking for free busy time");
   // const user = await prisma.user.findMany();
   // route.freeBusy(req, res, user[0]);
-
-  res.json(admin);
 });
 
 app.get("/get/student-input", async (req, res) => {

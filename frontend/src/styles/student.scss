@@ -12,6 +12,9 @@
   justify-content: center;
   align-items: center;
 
+  .error-message {
+    color: coral;
+  }
   .disability-check {
     display: flex;
     flex-direction: column;
@@ -169,7 +172,6 @@
           padding: $spacing-8 $spacing-16;
           margin-left: $spacing-24;
         }
-        
       }
     }
   }
